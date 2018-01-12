@@ -29,8 +29,16 @@ declare global {
   }
   namespace JSXElements {
     export interface MyComponentAttributes extends HTMLAttributes {
-      first?: string;
-      last?: string;
+      backgroundImageFn?: any;
+      emoji?: any;
+      fallback?: any;
+      forceSize?: any;
+      html?: any;
+      native?: any;
+      set?: any;
+      sheetSize?: any;
+      size?: any;
+      tooltip?: any;
     }
   }
 }
