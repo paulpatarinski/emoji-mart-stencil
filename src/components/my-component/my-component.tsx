@@ -1,5 +1,5 @@
 import { Component, Prop, State } from '@stencil/core';
-import { getData, getSanitizedData, unifiedToNative } from './utils';
+import Util from './utils';
 
 @Component({
   tag: 'my-component',
@@ -8,19 +8,23 @@ import { getData, getSanitizedData, unifiedToNative } from './utils';
 })
 
 export class MyComponent {
+  @State() EMOJI_DATASOURCE_VERSION = "4.0.2";
+  @State() SHEET_COLUMNS = 52;
+
   // @Prop() children: any;
-  @Prop() tooltip: any;
-  @Prop() native: any;
-  @Prop() size: any;
-  @Prop() forceSize: any;
-  @Prop() set: any;
+  @Prop() skin: any = 1;
+  @Prop() set: any = 'apple';
+  @Prop() sheetSize: any = 64;
+  @Prop() native: any = false;
+  @Prop() forceSize: any = false;
+  @Prop() tooltip: any = false;
+  @Prop() backgroundImageFn: any = (set, sheetSize) =>
+    `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`;
+
+  @Prop() size: string = '30px';
   @Prop() fallback: any;
-  @Prop() backgroundImageFn: any;
-  @Prop() sheetSize: any;
   @Prop() html: any;
   @Prop() emoji: any;
-
-  @State() SHEET_COLUMNS = 52;
 
   _getPosition = props => {
     var { sheet_x, sheet_y } = this._getData(props),
@@ -30,13 +34,13 @@ export class MyComponent {
   }
 
   _getData = props => {
-    var { emoji, skin, set } = props
-    return getData(emoji, skin, set)
+    var { emoji, skin, set } = props;
+    return Util.getData(emoji, skin, set)
   }
 
   _getSanitizedData = props => {
     var { emoji, skin, set } = props
-    return getSanitizedData(emoji, skin, set)
+    return Util.getSanitizedData(emoji, skin, set)
   }
 
   _handleClick = (e, props) => {
@@ -89,16 +93,9 @@ export class MyComponent {
     return div.getAttribute('style')
   }
 
-
   render() {
-    //TODO : figure out what this does & it is needed
-    // for (let k in Emoji.defaultProps) {
-    //   if (props[k] == undefined && Emoji.defaultProps[k] != undefined) {
-    //     props[k] = Emoji.defaultProps[k]
-    //   }
-    // }
-
     let data = this._getData(this)
+
     if (!data) {
       return null
     }
@@ -121,7 +118,7 @@ export class MyComponent {
     if (this.native && unified) {
       className += ' emoji-mart-emoji-native'
       style = { fontSize: this.size }
-      children = unifiedToNative(unified)
+      children = Util.unifiedToNative(unified)
 
       if (this.forceSize) {
         style.display = 'inline-block'
@@ -149,8 +146,8 @@ export class MyComponent {
         }
       } else {
         style = {
-          width: this.size,
-          height: this.size,
+          width: `${this.size}px`,
+          height: `${this.size}px`,
           display: 'inline-block',
           backgroundImage: `url(${this.backgroundImageFn(
             this.set,
@@ -164,6 +161,7 @@ export class MyComponent {
 
     if (this.html) {
       style = this._convertStyleToCSS(style)
+
       return `<span style='${style}' ${title
         ? `title='${title}'`
         : ''} class='${className}'>${children || ''}</span>`

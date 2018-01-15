@@ -2,7 +2,7 @@ import buildSearch from './build-search'
 import data from '../data'
 import stringFromCodePoint from '../polyfills/stringFromCodePoint'
 
-export default class Util {
+export default new class Util {
   _JSON = JSON
   COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
   SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
