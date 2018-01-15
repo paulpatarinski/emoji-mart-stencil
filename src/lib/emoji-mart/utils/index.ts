@@ -54,11 +54,11 @@ function sanitize(emoji) {
   }
 }
 
-function getSanitizedData(emoji, skin, set) {
+function getSanitizedData(emoji: any, skin?: any, set?: any) {
   return sanitize(getData(emoji, skin, set))
 }
 
-function getData(emoji, skin, set) {
+function getData(emoji: any, skin?: any, set?: any) {
   var emojiData: any = {}
 
   if (typeof emoji == 'string') {

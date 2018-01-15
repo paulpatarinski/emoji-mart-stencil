@@ -1,5 +1,6 @@
 import { Component, Prop, State } from '@stencil/core';
 import '../../lib/emoji-mart/vendor/raf-polyfill'
+import { I18N } from '../../lib/emoji-mart/data/I18N';
 
 import data from '../../lib/emoji-mart/data'
 
@@ -20,81 +21,13 @@ const SEARCH_CATEGORY = {
 }
 const CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', emojis: [] }
 
-const I18N = {
-    search: 'Search',
-    notfound: 'No Emoji Found',
-    categories: {
-        search: 'Search Results',
-        recent: 'Frequently Used',
-        people: 'Smileys & People',
-        nature: 'Animals & Nature',
-        foods: 'Food & Drink',
-        activity: 'Activity',
-        places: 'Travel & Places',
-        objects: 'Objects',
-        symbols: 'Symbols',
-        flags: 'Flags',
-        custom: 'Custom',
-    },
-}
-
 @Component({
     tag: 'emart-picker',
     shadow: true
 })
 
 export class Picker {
-    @State() EMOJI_DATASOURCE_VERSION = "4.0.2";
-
-    @Prop() recent: any;
-    @Prop() include: any;
-    @Prop() exclude: any;
-    @Prop() onClick: any = () => { };
-    @Prop() emojiSize: any = 24;
-    @Prop() perLine: any = 9;
-    @Prop() i18n: any = {};
-    @Prop() pickerStyle: any = {};
-    @Prop() pickerTitle: any = 'Emoji Mart™';
-    @Prop() emoji: any = 'department_store';
-    @Prop() color: any = '#ae65c5';
-    @Prop() set: any = 'apple';
-    @Prop() skin: any = 1;
-    @Prop() native: any = false;
-    @Prop() sheetSize: any = 64;
-    @Prop() backgroundImageFn: any = (set, sheetSize) =>
-        `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`;
-    @Prop() emojisToShowFilter: any;
-    @Prop() showPreview: any = true;
-    @Prop() emojiTooltip: any = false;
-    @Prop() autoFocus: any = false;
-    @Prop() custom: any = [];
-
-
-    @State() _i18n = deepMerge(I18N, this.i18n);
-    @State() _state = {
-        skin: storeGet('skin') || this.skin,
-        firstRender: true,
-    };
-
-    @State() _categories = [];
-    @State() _hideRecent;
-    @State() _firstRender;
-    @State() _firstRenderTimeout;
-    @State() _leaveTimeout;
-    @State() _hasStickyPosition;
-    @State() _preview;
-    @State() _categoryRefs: any = {};
-    @State() _scroll: any;
-    @State() _waitingForPaint: any;
-    @State() _scrollTop: any;
-    @State() _clientHeight: any;
-    @State() _scrollHeight: any;
-    @State() _forceUpdate: any;
-    @State() _search: any;
-    @State() _anchors: any;
-
-
-    componentDidLoad() {
+    constructor() {
         let allCategories = [].concat(data.categories)
 
         if (this.custom.length > 0) {
@@ -198,6 +131,54 @@ export class Picker {
         this.setPreviewRef = this.setPreviewRef.bind(this)
         this.handleSkinChange = this.handleSkinChange.bind(this)
     }
+
+    @State() EMOJI_DATASOURCE_VERSION = "4.0.2";
+
+    @Prop() recent: any;
+    @Prop() include: any;
+    @Prop() exclude: any;
+    @Prop() onClick: any = () => { };
+    @Prop() emojiSize: any = 24;
+    @Prop() perLine: any = 9;
+    @Prop() i18n: any = {};
+    @Prop() pickerStyle: any = {};
+    @Prop() pickerTitle: any = 'Emoji Mart™';
+    @Prop() emoji: any = 'department_store';
+    @Prop() color: any = '#ae65c5';
+    @Prop() set: any = 'apple';
+    @Prop() skin: any = 1;
+    @Prop() native: any = false;
+    @Prop() sheetSize: any = 64;
+    @Prop() backgroundImageFn: any = (set, sheetSize) =>
+        `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`;
+    @Prop() emojisToShowFilter: any;
+    @Prop() showPreview: any = true;
+    @Prop() emojiTooltip: any = false;
+    @Prop() autoFocus: any = false;
+    @Prop() custom: any = [];
+
+
+    @State() _i18n = deepMerge(I18N, this.i18n);
+    @State() _state = {
+        skin: storeGet('skin') || this.skin,
+        firstRender: true,
+    };
+
+    @State() _categories = [];
+    @State() _hideRecent;
+    @State() _firstRender;
+    @State() _firstRenderTimeout;
+    @State() _leaveTimeout;
+    @State() _hasStickyPosition;
+    @State() _preview;
+    @State() _categoryRefs: any = {};
+    @State() _scroll: any;
+    @State() _waitingForPaint: any;
+    @State() _scrollTop: any;
+    @State() _clientHeight: any;
+    @State() _scrollHeight: any;
+    @State() _search: any;
+    @State() _anchors: any;
 
     componentWillReceiveProps(props) {
         if (props.skin && !storeGet('skin')) {
@@ -307,6 +288,8 @@ export class Picker {
         if (!this._scroll) {
             return
         }
+        console.log('HANDLE SCROLL');
+
 
         let activeCategory = null
 
@@ -371,9 +354,14 @@ export class Picker {
             }
         }
 
-        this._forceUpdate()
+        this.forceUpdate()
         this._scroll.scrollTop = 0
         this.handleScroll()
+    }
+
+    forceUpdate() {
+        //This is a way to force an update https://github.com/ionic-team/stencil/issues/185
+        this.i18n = { ...this.i18n };
     }
 
     handleAnchorClick(category, i) {
@@ -468,7 +456,6 @@ export class Picker {
             pickerStyle,
             pickerTitle,
             emoji,
-            color,
             native,
             backgroundImageFn,
             emojisToShowFilter,
@@ -490,13 +477,13 @@ export class Picker {
                     <emart-anchors
                         ref={this.setAnchorsRef}
                         i18n={this._i18n}
-                        color={color}
+                        color={this.color}
                         categories={this._categories}
                         onAnchorClick={this.handleAnchorClick}
                     ></emart-anchors>
                 </div>
 
-                {/* <Search
+                <emart-search
                     ref={this.setSearchRef}
                     onSearch={this.handleSearch}
                     i18n={this.i18n}
@@ -505,7 +492,7 @@ export class Picker {
                     exclude={exclude}
                     custom={CUSTOM_CATEGORY.emojis}
                     autoFocus={autoFocus}
-                /> */}
+                />
 
                 <div
                     ref={this.setScrollRef}

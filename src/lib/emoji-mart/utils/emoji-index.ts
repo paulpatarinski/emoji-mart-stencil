@@ -1,5 +1,5 @@
 import data from '../data'
-import { getData, getSanitizedData, intersect } from '.'
+import { getData, getSanitizedData, intersect } from './index'
 
 var originalPool = {}
 var index = {}
@@ -38,10 +38,10 @@ function addCustomToPool(custom, pool) {
 
 function search(
   value,
-  { emojisToShowFilter, maxResults, include, exclude, custom = [] } = {}
+  { emojisToShowFilter, maxResults, include, exclude, custom = [] }: any = {}
 ) {
   addCustomToPool(custom, originalPool)
-
+  console.log(value);
   maxResults || (maxResults = 75)
   include || (include = [])
   exclude || (exclude = [])
@@ -92,7 +92,7 @@ function search(
     allResults = values
       .map(value => {
         var aPool = pool,
-          aIndex = index,
+          aIndex: any = index,
           length = 0
 
         for (let charIndex = 0; charIndex < value.length; charIndex++) {
