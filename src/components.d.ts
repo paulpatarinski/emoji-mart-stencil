@@ -37,7 +37,8 @@ declare global {
       native?: any;
       set?: any;
       sheetSize?: any;
-      size?: any;
+      size?: string;
+      skin?: any;
       tooltip?: any;
     }
   }
