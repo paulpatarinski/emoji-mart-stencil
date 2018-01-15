@@ -22,8 +22,7 @@ const SEARCH_CATEGORY = {
 const CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', emojis: [] }
 
 @Component({
-    tag: 'emart-picker',
-    shadow: true
+    tag: 'emart-picker'
 })
 
 export class Picker {
@@ -346,7 +345,7 @@ export class Picker {
         for (let i = 0, l = this._categories.length; i < l; i++) {
             let component = this._categoryRefs[`category-${i}`]
 
-            if (component && component.props.name != 'Search') {
+            if (component && component.name != 'Search') {
                 let display = emojis ? 'none' : 'inherit'
                 component.updateDisplay(display)
             }
@@ -363,9 +362,6 @@ export class Picker {
     }
 
     handleAnchorClick(category, i) {
-        console.log('CLICKED category');
-        console.log(category);
-
         var component = this._categoryRefs[`category-${i}`],
             { _scroll, _anchors } = this,
             scrollToComponent = null
@@ -379,7 +375,6 @@ export class Picker {
                 } else {
                     top += 1
                 }
-
                 _scroll.scrollTop = top
             }
         }
@@ -440,6 +435,11 @@ export class Picker {
     }
 
     setCategoryRef(name, c) {
+        // console.log('Category Name');
+        // console.log(name);
+        // console.log('CATEGORY');
+
+        // console.log(c);
         if (!this._categoryRefs) {
             this._categoryRefs = {}
         }
@@ -500,39 +500,37 @@ export class Picker {
                     onScroll={this.handleScroll}
                 >
                     {this.getCategories().map((category, i) => {
-                        return (<p></p>
-                            // TODO : ADD BACK
-                            // <Category
-                            //     ref={this.setCategoryRef.bind(this, `category-${i}`)}
-                            //     key={category.name}
-                            //     id={category.id}
-                            //     name={category.name}
-                            //     emojis={category.emojis}
-                            //     perLine={perLine}
-                            //     native={native}
-                            //     hasStickyPosition={this._hasStickyPosition}
-                            //     i18n={this.i18n}
-                            //     recent={category.id == RECENT_CATEGORY.id ? recent : undefined}
-                            //     custom={
-                            //         category.id == RECENT_CATEGORY.id
-                            //             ? CUSTOM_CATEGORY.emojis
-                            //             : undefined
-                            //     }
-                            //     emojiProps={{
-                            //         native: native,
-                            //         skin: skin,
-                            //         size: emojiSize,
-                            //         set: set,
-                            //         sheetSize: sheetSize,
-                            //         forceSize: native,
-                            //         tooltip: emojiTooltip,
-                            //         backgroundImageFn: backgroundImageFn,
-                            //         onOver: this.handleEmojiOver,
-                            //         onLeave: this.handleEmojiLeave,
-                            //         onClick: this.handleEmojiClick,
-                            //     }}
-                            // 
-                            // )/>
+                        return (
+                            <emart-category
+                                ref={this.setCategoryRef.bind(this, `category-${i}`)}
+                                category-key={category.name}
+                                category-id={category.id}
+                                name={category.name}
+                                emojis={category.emojis}
+                                perLine={perLine}
+                                native={native}
+                                hasStickyPosition={this._hasStickyPosition}
+                                i18n={this._i18n}
+                                recent={category.id == RECENT_CATEGORY.id ? recent : undefined}
+                                custom={
+                                    category.id == RECENT_CATEGORY.id
+                                        ? CUSTOM_CATEGORY.emojis
+                                        : undefined
+                                }
+                                emojiProps={{
+                                    native: native,
+                                    skin: skin,
+                                    size: emojiSize,
+                                    set: set,
+                                    sheetSize: sheetSize,
+                                    forceSize: native,
+                                    tooltip: emojiTooltip,
+                                    backgroundImageFn: backgroundImageFn,
+                                    onOver: this.handleEmojiOver,
+                                    onLeave: this.handleEmojiLeave,
+                                    onClick: this.handleEmojiClick.bind(this, emoji),
+                                }}
+                            />
                         )
                     })}
                 </div>

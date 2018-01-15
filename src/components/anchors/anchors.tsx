@@ -4,8 +4,7 @@ import { I18N } from '../../lib/emoji-mart/data/I18N';
 import data from '../../lib/emoji-mart/data'
 
 @Component({
-    tag: 'emart-anchors',
-    shadow: true
+    tag: 'emart-anchors'
 })
 
 export class Anchors {
@@ -40,6 +39,8 @@ export class Anchors {
     }
 
     handleClick(e) {
+        console.log('CLICKED');
+        console.log(e);
         var index = e.currentTarget.getAttribute('data-index')
 
         this.onAnchorClick(this.categories[index], index)

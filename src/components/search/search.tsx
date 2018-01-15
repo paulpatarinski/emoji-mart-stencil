@@ -3,8 +3,7 @@ import emojiIndex from '../../lib/emoji-mart/utils/emoji-index'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
 
 @Component({
-    tag: 'emart-search',
-    shadow: true
+    tag: 'emart-search'
 })
 
 export class Search {

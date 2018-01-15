@@ -3,8 +3,7 @@ import { getData, unifiedToNative, getSanitizedData } from '../../lib/emoji-mart
 
 @Component({
     tag: 'emart-emoji',
-    styleUrl: '../../lib/emoji-mart/emoji-mart.scss',
-    shadow: true
+    styleUrl: '../../lib/emoji-mart/emoji-mart.scss'
 })
 
 export class Emoji {
