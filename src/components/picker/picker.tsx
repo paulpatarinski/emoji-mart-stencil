@@ -362,6 +362,7 @@ export class Picker {
     }
 
     handleAnchorClick(category, i) {
+        //TODO : figure out why emojis are not being filtered
         var component = this._categoryRefs[`category-${i}`],
             { _scroll, _anchors } = this,
             scrollToComponent = null
