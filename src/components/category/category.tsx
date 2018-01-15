@@ -34,8 +34,6 @@ export class Category {
     @State() _maxMargin: any;
 
     componentDidLoad() {
-        console.log('CONTAINER IS');
-        console.log(this._container);
         this._parent = this._container.parentNode
 
         this._margin = 0
@@ -161,8 +159,6 @@ export class Category {
     }
 
     setContainerRef(c) {
-        console.log('SELF CONTAINER');
-        console.log(c);
         this._container = c
     }
 
@@ -211,7 +207,7 @@ export class Category {
                     </span>
                 </div>
 
-                {emojis && emojis.map(emoji => <emart-emoji emoji={emoji} size={30} ></emart-emoji>)}
+                {emojis && emojis.map(emoji => <emart-emoji emoji={emoji} size={30} onOver={emojiProps.onOver} onLeave={emojiProps.onLeave}  ></emart-emoji>)}
 
                 {emojis &&
                     !emojis.length && (

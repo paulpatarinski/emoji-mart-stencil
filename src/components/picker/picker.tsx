@@ -141,7 +141,6 @@ export class Picker {
     @Prop() perLine: any = 9;
     @Prop() i18n: any = {};
     @Prop() pickerStyle: any = {};
-    @Prop() pickerTitle: any = 'Emoji Mart™';
     @Prop() emoji: any = 'department_store';
     @Prop() color: any = '#ae65c5';
     @Prop() set: any = 'apple';
@@ -155,7 +154,7 @@ export class Picker {
     @Prop() emojiTooltip: any = false;
     @Prop() autoFocus: any = false;
     @Prop() custom: any = [];
-
+    @Prop() title: string = "Emoji Mart™";
 
     @State() _i18n = deepMerge(I18N, this.i18n);
     @State() _state = {
@@ -233,7 +232,6 @@ export class Picker {
                 emoji[key] = emojiData[key]
             }
         }
-
         _preview.emoji = emoji;
         clearTimeout(this._leaveTimeout)
     }
@@ -422,8 +420,6 @@ export class Picker {
     }
 
     setSearchRef(c) {
-        console.log('SETTING SEARCH TO');
-        console.log(c);
         this._search = c
     }
 
@@ -436,11 +432,6 @@ export class Picker {
     }
 
     setCategoryRef(name, c) {
-        // console.log('Category Name');
-        // console.log(name);
-        // console.log('CATEGORY');
-
-        // console.log(c);
         if (!this._categoryRefs) {
             this._categoryRefs = {}
         }
@@ -455,7 +446,7 @@ export class Picker {
             set,
             sheetSize,
             pickerStyle,
-            pickerTitle,
+            title,
             emoji,
             native,
             backgroundImageFn,
@@ -535,29 +526,28 @@ export class Picker {
                         )
                     })}
                 </div>
-
-                {showPreview && (
-                    <div class="emoji-mart-bar">
-                        {/* TODO : ADD BACK */}
-                        {/* <Preview
-                            ref={this.setPreviewRef}
-                            title={title}
-                            emoji={emoji}
-                            emojiProps={{
-                                native: native,
-                                size: 38,
-                                skin: skin,
-                                set: set,
-                                sheetSize: sheetSize,
-                                backgroundImageFn: backgroundImageFn,
-                            }}
-                            skinsProps={{
-                                skin: skin,
-                                onChange: this.handleSkinChange,
-                            }}
-                        /> */}
-                    </div>
-                )}
+                {
+                    showPreview && (
+                        <div class="emoji-mart-bar">
+                            <emart-preview
+                                ref={this.setPreviewRef}
+                                title={title}
+                                idleEmoji={emoji}
+                                emojiProps={{
+                                    native: native,
+                                    size: 38,
+                                    skin: skin,
+                                    set: set,
+                                    sheetSize: sheetSize,
+                                    backgroundImageFn: backgroundImageFn
+                                }}
+                                skinsProps={{
+                                    skin: skin,
+                                    onChange: this.handleSkinChange,
+                                }}
+                            />
+                        </div>
+                    )}
             </div>
         )
     }

@@ -6,90 +6,40 @@
 
 
 import {
-  Emoji as EmartEmoji
-} from './components/emoji/emoji';
+  Category as EmartCategory
+} from './components/category/category';
 
 declare global {
-  interface HTMLEmartEmojiElement extends EmartEmoji, HTMLElement {
+  interface HTMLEmartCategoryElement extends EmartCategory, HTMLElement {
   }
-  var HTMLEmartEmojiElement: {
-    prototype: HTMLEmartEmojiElement;
-    new (): HTMLEmartEmojiElement;
+  var HTMLEmartCategoryElement: {
+    prototype: HTMLEmartCategoryElement;
+    new (): HTMLEmartCategoryElement;
   };
   interface HTMLElementTagNameMap {
-    "emart-emoji": HTMLEmartEmojiElement;
+    "emart-category": HTMLEmartCategoryElement;
   }
   interface ElementTagNameMap {
-    "emart-emoji": HTMLEmartEmojiElement;
+    "emart-category": HTMLEmartCategoryElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "emart-emoji": JSXElements.EmartEmojiAttributes;
+      "emart-category": JSXElements.EmartCategoryAttributes;
     }
   }
   namespace JSXElements {
-    export interface EmartEmojiAttributes extends HTMLAttributes {
-      backgroundImageFn?: any;
-      emoji?: any;
-      fallback?: any;
-      forceSize?: any;
-      html?: any;
-      native?: any;
-      set?: any;
-      sheetSize?: any;
-      size?: number;
-      skin?: any;
-      tooltip?: any;
-    }
-  }
-}
-
-
-import {
-  Picker as EmartPicker
-} from './components/picker/picker';
-
-declare global {
-  interface HTMLEmartPickerElement extends EmartPicker, HTMLElement {
-  }
-  var HTMLEmartPickerElement: {
-    prototype: HTMLEmartPickerElement;
-    new (): HTMLEmartPickerElement;
-  };
-  interface HTMLElementTagNameMap {
-    "emart-picker": HTMLEmartPickerElement;
-  }
-  interface ElementTagNameMap {
-    "emart-picker": HTMLEmartPickerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "emart-picker": JSXElements.EmartPickerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface EmartPickerAttributes extends HTMLAttributes {
-      autoFocus?: any;
-      backgroundImageFn?: any;
-      color?: any;
+    export interface EmartCategoryAttributes extends HTMLAttributes {
+      categoryId?: any;
+      categoryKey?: any;
       custom?: any;
-      emoji?: any;
-      emojiSize?: any;
-      emojisToShowFilter?: any;
-      emojiTooltip?: any;
-      exclude?: any;
+      emojiProps?: any;
+      emojis?: any;
+      hasStickyPosition?: boolean;
       i18n?: any;
-      include?: any;
-      native?: any;
-      onClick?: any;
-      perLine?: any;
-      pickerStyle?: any;
-      pickerTitle?: any;
-      recent?: any;
-      set?: any;
-      sheetSize?: any;
-      showPreview?: any;
-      skin?: any;
+      name?: string;
+      native?: boolean;
+      perLine?: number;
+      recent?: string[];
     }
   }
 }
