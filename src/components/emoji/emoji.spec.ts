@@ -1,7 +1,8 @@
 import { flush, render } from '@stencil/core/testing';
-import { MyComponent } from './my-component';
+import { MyComponent } from './emoji';
 
-describe('my-component', () => {
+//TODO : update tests to test the Emoji
+describe('emoji', () => {
   it('should build', () => {
     expect(new MyComponent()).toBeTruthy();
   });
@@ -11,7 +12,7 @@ describe('my-component', () => {
     beforeEach(async () => {
       element = await render({
         components: [MyComponent],
-        html: '<my-component></my-component>'
+        html: '<emoji></emoji>'
       });
     });
 

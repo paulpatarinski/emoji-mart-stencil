@@ -1,9 +1,9 @@
 import { Component, Prop, State } from '@stencil/core';
-import { getData, unifiedToNative, getSanitizedData } from './utils';
+import { getData, unifiedToNative, getSanitizedData } from '../../lib/emoji-mart/utils';
 
 @Component({
-    tag: 'my-component',
-    styleUrl: 'my-component.scss',
+    tag: 'emart-emoji',
+    styleUrl: '../../lib/emoji-mart/emoji-mart.scss',
     shadow: true
 })
 
@@ -21,7 +21,7 @@ export class MyComponent {
     @Prop() backgroundImageFn: any = (set, sheetSize) =>
         `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`;
 
-    @Prop() size: string = '30px';
+    @Prop() size: number;
     @Prop() fallback: any;
     @Prop() html: any;
     @Prop() emoji: any;

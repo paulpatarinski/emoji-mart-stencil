@@ -6,29 +6,29 @@
 
 
 import {
-  MyComponent as MyComponent
-} from './components/my-component/my-component';
+  MyComponent as EmartEmoji
+} from './components/emoji/emoji';
 
 declare global {
-  interface HTMLMyComponentElement extends MyComponent, HTMLElement {
+  interface HTMLEmartEmojiElement extends EmartEmoji, HTMLElement {
   }
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
+  var HTMLEmartEmojiElement: {
+    prototype: HTMLEmartEmojiElement;
+    new (): HTMLEmartEmojiElement;
   };
   interface HTMLElementTagNameMap {
-    "my-component": HTMLMyComponentElement;
+    "emart-emoji": HTMLEmartEmojiElement;
   }
   interface ElementTagNameMap {
-    "my-component": HTMLMyComponentElement;
+    "emart-emoji": HTMLEmartEmojiElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "my-component": JSXElements.MyComponentAttributes;
+      "emart-emoji": JSXElements.EmartEmojiAttributes;
     }
   }
   namespace JSXElements {
-    export interface MyComponentAttributes extends HTMLAttributes {
+    export interface EmartEmojiAttributes extends HTMLAttributes {
       backgroundImageFn?: any;
       emoji?: any;
       fallback?: any;
@@ -37,7 +37,7 @@ declare global {
       native?: any;
       set?: any;
       sheetSize?: any;
-      size?: string;
+      size?: number;
       skin?: any;
       tooltip?: any;
     }

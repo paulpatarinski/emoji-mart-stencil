@@ -1,8 +1,8 @@
 exports.config = {
-  namespace: 'mycomponent',
+  namespace: 'emoji-mart',
   generateDistribution: true,
   bundles: [
-    { components: ['my-component'] }
+    { components: ['emart-emoji'] }
   ]
 };
 
