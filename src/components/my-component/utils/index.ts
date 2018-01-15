@@ -2,196 +2,189 @@ import buildSearch from './build-search'
 import data from '../data'
 import stringFromCodePoint from '../polyfills/stringFromCodePoint'
 
-const _JSON = JSON
+export default class Util {
+  _JSON = JSON
+  COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
+  SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
 
-const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
-const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
+  unifiedToNative(unified) {
+    var unicodes = unified.split('-'),
+      codePoints = unicodes.map(u => `0x${u}`)
 
-function unifiedToNative(unified) {
-  var unicodes = unified.split('-'),
-    codePoints = unicodes.map(u => `0x${u}`)
+    return stringFromCodePoint.apply(null, codePoints)
+  };
 
-  return stringFromCodePoint.apply(null, codePoints)
-}
-
-function sanitize(emoji) {
-  var {
+  sanitize(emoji) {
+    var {
       name,
-    short_names,
-    skin_tone,
-    skin_variations,
-    emoticons,
-    unified,
-    custom,
-    imageUrl,
+      short_names,
+      skin_tone,
+      skin_variations,
+      emoticons,
+      unified,
+      custom,
+      imageUrl,
     } = emoji,
-    id = emoji.id || short_names[0],
-    colons = `:${id}:`
+      id = emoji.id || short_names[0],
+      colons = `:${id}:`
 
-  if (custom) {
+    if (custom) {
+      return {
+        id,
+        name,
+        colons,
+        emoticons,
+        custom,
+        imageUrl,
+      }
+    }
+
+    if (skin_tone) {
+      colons += `:skin-tone-${skin_tone}:`
+    }
+
     return {
       id,
       name,
       colons,
       emoticons,
-      custom,
-      imageUrl,
+      unified: unified.toLowerCase(),
+      skin: skin_tone || (skin_variations ? 1 : null),
+      native: this.unifiedToNative(unified),
     }
-  }
+  };
 
-  if (skin_tone) {
-    colons += `:skin-tone-${skin_tone}:`
-  }
+  getSanitizedData(emoji, skin, set) {
+    return this.sanitize(this.getData(emoji, skin, set))
+  };
 
-  return {
-    id,
-    name,
-    colons,
-    emoticons,
-    unified: unified.toLowerCase(),
-    skin: skin_tone || (skin_variations ? 1 : null),
-    native: unifiedToNative(unified),
-  }
-}
+  public getData(emoji, skin, set) {
+    var emojiData: any = {}
 
-function getSanitizedData(emoji, skin, set) {
-  return sanitize(this.getData(emoji, skin, set))
-}
+    if (typeof emoji == 'string') {
+      let matches = emoji.match(this.COLONS_REGEX)
 
-export function getData(emoji, skin, set) {
-  var emojiData: any = {}
+      if (matches) {
+        emoji = matches[1]
 
-  if (typeof emoji == 'string') {
-    let matches = emoji.match(COLONS_REGEX)
+        if (matches[2]) {
+          skin = parseInt(matches[2])
+        }
+      }
 
-    if (matches) {
-      emoji = matches[1]
+      if (data.short_names.hasOwnProperty(emoji)) {
+        emoji = data.short_names[emoji]
+      }
 
-      if (matches[2]) {
-        skin = parseInt(matches[2])
+      if (data.emojis.hasOwnProperty(emoji)) {
+        emojiData = data.emojis[emoji]
+      } else {
+        return null
+      }
+    } else if (emoji.id) {
+      if (data.short_names.hasOwnProperty(emoji.id)) {
+        emoji.id = data.short_names[emoji.id]
+      }
+
+      if (data.emojis.hasOwnProperty(emoji.id)) {
+        emojiData = data.emojis[emoji.id]
+        skin || (skin = emoji.skin)
       }
     }
 
-    if (data.short_names.hasOwnProperty(emoji)) {
-      emoji = data.short_names[emoji]
-    }
+    if (!Object.keys(emojiData).length) {
+      emojiData = emoji
+      emojiData.custom = true
 
-    if (data.emojis.hasOwnProperty(emoji)) {
-      emojiData = data.emojis[emoji]
-    } else {
-      return null
-    }
-  } else if (emoji.id) {
-    if (data.short_names.hasOwnProperty(emoji.id)) {
-      emoji.id = data.short_names[emoji.id]
-    }
-
-    if (data.emojis.hasOwnProperty(emoji.id)) {
-      emojiData = data.emojis[emoji.id]
-      skin || (skin = emoji.skin)
-    }
-  }
-
-  if (!Object.keys(emojiData).length) {
-    emojiData = emoji
-    emojiData.custom = true
-
-    if (!emojiData.search) {
-      emojiData.search = buildSearch(emoji)
-    }
-  }
-
-  emojiData.emoticons || (emojiData.emoticons = [])
-  emojiData.variations || (emojiData.variations = [])
-
-  if (emojiData.skin_variations && skin > 1 && set) {
-    emojiData = JSON.parse(_JSON.stringify(emojiData))
-
-    var skinKey = SKINS[skin - 1],
-      variationData = emojiData.skin_variations[skinKey]
-
-    if (!variationData.variations && emojiData.variations) {
-      delete emojiData.variations
-    }
-
-    if (variationData[`has_img_${set}`]) {
-      emojiData.skin_tone = skin
-
-      for (let k in variationData) {
-        let v = variationData[k]
-        emojiData[k] = v
+      if (!emojiData.search) {
+        emojiData.search = buildSearch(emoji)
       }
     }
-  }
 
-  if (emojiData.variations && emojiData.variations.length) {
-    emojiData = JSON.parse(_JSON.stringify(emojiData))
-    emojiData.unified = emojiData.variations.shift()
-  }
+    emojiData.emoticons || (emojiData.emoticons = [])
+    emojiData.variations || (emojiData.variations = [])
 
-  return emojiData
-}
+    if (emojiData.skin_variations && skin > 1 && set) {
+      emojiData = JSON.parse(this._JSON.stringify(emojiData))
 
-function uniq(arr) {
-  return arr.reduce((acc, item) => {
-    if (acc.indexOf(item) === -1) {
-      acc.push(item)
-    }
-    return acc
-  }, [])
-}
+      var skinKey = this.SKINS[skin - 1],
+        variationData = emojiData.skin_variations[skinKey]
 
-function intersect(a, b) {
-  const uniqA = uniq(a)
-  const uniqB = uniq(b)
+      if (!variationData.variations && emojiData.variations) {
+        delete emojiData.variations
+      }
 
-  return uniqA.filter(item => uniqB.indexOf(item) >= 0)
-}
+      if (variationData[`has_img_${set}`]) {
+        emojiData.skin_tone = skin
 
-function deepMerge(a, b) {
-  var o = {}
-
-  for (let key in a) {
-    let originalValue = a[key],
-      value = originalValue
-
-    if (b.hasOwnProperty(key)) {
-      value = b[key]
+        for (let k in variationData) {
+          let v = variationData[k]
+          emojiData[k] = v
+        }
+      }
     }
 
-    if (typeof value === 'object') {
-      value = deepMerge(originalValue, value)
+    if (emojiData.variations && emojiData.variations.length) {
+      emojiData = JSON.parse(this._JSON.stringify(emojiData))
+      emojiData.unified = emojiData.variations.shift()
     }
 
-    o[key] = value
+    return emojiData
   }
 
-  return o
-}
+  uniq(arr) {
+    return arr.reduce((acc, item) => {
+      if (acc.indexOf(item) === -1) {
+        acc.push(item)
+      }
+      return acc
+    }, [])
+  }
 
-// https://github.com/sonicdoe/measure-scrollbar
-function measureScrollbar() {
-  if (typeof document == 'undefined') return 0
-  const div = document.createElement('div')
+  intersect(a, b) {
+    const uniqA = this.uniq(a)
+    const uniqB = this.uniq(b)
 
-  div.style.width = '100px'
-  div.style.height = '100px'
-  div.style.overflow = 'scroll'
-  div.style.position = 'absolute'
-  div.style.top = '-9999px'
+    return uniqA.filter(item => uniqB.indexOf(item) >= 0)
+  }
 
-  document.body.appendChild(div)
-  const scrollbarWidth = div.offsetWidth - div.clientWidth
-  document.body.removeChild(div)
+  deepMerge(a, b) {
+    var o = {}
 
-  return scrollbarWidth
-}
+    for (let key in a) {
+      let originalValue = a[key],
+        value = originalValue
 
-export {
-  getSanitizedData,
-  uniq,
-  intersect,
-  deepMerge,
-  unifiedToNative,
-  measureScrollbar,
+      if (b.hasOwnProperty(key)) {
+        value = b[key]
+      }
+
+      if (typeof value === 'object') {
+        value = this.deepMerge(originalValue, value)
+      }
+
+      o[key] = value
+    }
+
+    return o
+  }
+
+  // https://github.com/sonicdoe/measure-scrollbar
+  measureScrollbar() {
+    if (typeof document == 'undefined') return 0
+    const div = document.createElement('div')
+
+    div.style.width = '100px'
+    div.style.height = '100px'
+    div.style.overflow = 'scroll'
+    div.style.position = 'absolute'
+    div.style.top = '-9999px'
+
+    document.body.appendChild(div)
+    const scrollbarWidth = div.offsetWidth - div.clientWidth
+    document.body.removeChild(div)
+
+    return scrollbarWidth
+  }
+
 }
