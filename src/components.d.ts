@@ -6,90 +6,37 @@
 
 
 import {
-  Emoji as EmartEmoji
-} from './components/emoji/emoji';
+  Search as EmartSearch
+} from './components/search/search';
 
 declare global {
-  interface HTMLEmartEmojiElement extends EmartEmoji, HTMLElement {
+  interface HTMLEmartSearchElement extends EmartSearch, HTMLElement {
   }
-  var HTMLEmartEmojiElement: {
-    prototype: HTMLEmartEmojiElement;
-    new (): HTMLEmartEmojiElement;
+  var HTMLEmartSearchElement: {
+    prototype: HTMLEmartSearchElement;
+    new (): HTMLEmartSearchElement;
   };
   interface HTMLElementTagNameMap {
-    "emart-emoji": HTMLEmartEmojiElement;
+    "emart-search": HTMLEmartSearchElement;
   }
   interface ElementTagNameMap {
-    "emart-emoji": HTMLEmartEmojiElement;
+    "emart-search": HTMLEmartSearchElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "emart-emoji": JSXElements.EmartEmojiAttributes;
+      "emart-search": JSXElements.EmartSearchAttributes;
     }
   }
   namespace JSXElements {
-    export interface EmartEmojiAttributes extends HTMLAttributes {
-      backgroundImageFn?: any;
-      emoji?: any;
-      fallback?: any;
-      forceSize?: any;
-      html?: any;
-      native?: any;
-      set?: any;
-      sheetSize?: any;
-      size?: number;
-      skin?: any;
-      tooltip?: any;
-    }
-  }
-}
-
-
-import {
-  Picker as EmartPicker
-} from './components/picker/picker';
-
-declare global {
-  interface HTMLEmartPickerElement extends EmartPicker, HTMLElement {
-  }
-  var HTMLEmartPickerElement: {
-    prototype: HTMLEmartPickerElement;
-    new (): HTMLEmartPickerElement;
-  };
-  interface HTMLElementTagNameMap {
-    "emart-picker": HTMLEmartPickerElement;
-  }
-  interface ElementTagNameMap {
-    "emart-picker": HTMLEmartPickerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "emart-picker": JSXElements.EmartPickerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface EmartPickerAttributes extends HTMLAttributes {
-      autoFocus?: any;
-      backgroundImageFn?: any;
-      color?: any;
+    export interface EmartSearchAttributes extends HTMLAttributes {
+      autoFocus?: boolean;
       custom?: any;
-      emoji?: any;
-      emojiSize?: any;
       emojisToShowFilter?: any;
-      emojiTooltip?: any;
       exclude?: any;
       i18n?: any;
       include?: any;
-      native?: any;
-      onClick?: any;
-      perLine?: any;
-      pickerStyle?: any;
-      pickerTitle?: any;
-      recent?: any;
-      set?: any;
-      sheetSize?: any;
-      showPreview?: any;
-      skin?: any;
+      maxResults?: number;
+      onSearch?: any;
     }
   }
 }

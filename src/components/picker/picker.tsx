@@ -288,8 +288,6 @@ export class Picker {
         if (!this._scroll) {
             return
         }
-        console.log('HANDLE SCROLL');
-
 
         let activeCategory = null
 
@@ -334,7 +332,7 @@ export class Picker {
             let { _anchors } = this,
                 { name: categoryName } = activeCategory
 
-            if (_anchors.state.selected != categoryName) {
+            if (_anchors.selected != categoryName) {
                 _anchors.selected = categoryName
             }
         }
@@ -428,6 +426,8 @@ export class Picker {
     }
 
     setSearchRef(c) {
+        console.log('SETTING SEARCH TO');
+        console.log(c);
         this._search = c
     }
 

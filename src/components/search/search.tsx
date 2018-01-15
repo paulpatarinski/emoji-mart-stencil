@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Method, Component, Prop, State } from '@stencil/core';
 import emojiIndex from '../../lib/emoji-mart/utils/emoji-index'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
 
@@ -42,6 +42,7 @@ export class Search {
         this._input = c
     }
 
+    @Method()
     clear() {
         this._input.value = ''
     }
