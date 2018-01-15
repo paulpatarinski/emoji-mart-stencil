@@ -6,7 +6,7 @@
 
 
 import {
-  MyComponent as EmartEmoji
+  Emoji as EmartEmoji
 } from './components/emoji/emoji';
 
 declare global {
@@ -40,6 +40,56 @@ declare global {
       size?: number;
       skin?: any;
       tooltip?: any;
+    }
+  }
+}
+
+
+import {
+  Picker as EmartPicker
+} from './components/picker/picker';
+
+declare global {
+  interface HTMLEmartPickerElement extends EmartPicker, HTMLElement {
+  }
+  var HTMLEmartPickerElement: {
+    prototype: HTMLEmartPickerElement;
+    new (): HTMLEmartPickerElement;
+  };
+  interface HTMLElementTagNameMap {
+    "emart-picker": HTMLEmartPickerElement;
+  }
+  interface ElementTagNameMap {
+    "emart-picker": HTMLEmartPickerElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "emart-picker": JSXElements.EmartPickerAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface EmartPickerAttributes extends HTMLAttributes {
+      autoFocus?: any;
+      backgroundImageFn?: any;
+      color?: any;
+      custom?: any;
+      emoji?: any;
+      emojiSize?: any;
+      emojisToShowFilter?: any;
+      emojiTooltip?: any;
+      exclude?: any;
+      i18n?: any;
+      include?: any;
+      native?: any;
+      onClick?: any;
+      perLine?: any;
+      pickerStyle?: any;
+      pickerTitle?: any;
+      recent?: any;
+      set?: any;
+      sheetSize?: any;
+      showPreview?: any;
+      skin?: any;
     }
   }
 }

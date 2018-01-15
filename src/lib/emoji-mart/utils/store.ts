@@ -33,7 +33,7 @@ function set(key, value) {
     if (!isLocalStorageSupported) return
     try {
       window.localStorage[`${NAMESPACE}.${key}`] = _JSON.stringify(value)
-    } catch (e) {}
+    } catch (e) { }
   }
 }
 
@@ -54,4 +54,4 @@ function get(key) {
   }
 }
 
-export default { update, set, get, setNamespace, setHandlers }
+export { update, set, get, setNamespace, setHandlers }

@@ -7,7 +7,7 @@ import { getData, unifiedToNative, getSanitizedData } from '../../lib/emoji-mart
     shadow: true
 })
 
-export class MyComponent {
+export class Emoji {
     @State() EMOJI_DATASOURCE_VERSION = "4.0.2";
     @State() SHEET_COLUMNS = 52;
 

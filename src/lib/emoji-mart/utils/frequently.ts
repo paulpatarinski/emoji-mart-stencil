@@ -1,4 +1,4 @@
-import store from './store'
+import { get as storeGet, set as storeSet } from './store'
 
 const DEFAULTS = [
   '+1',
@@ -24,7 +24,7 @@ let defaults = {}
 
 function init() {
   initialized = true
-  frequently = store.get('frequently')
+  frequently = storeGet('frequently')
 }
 
 function add(emoji) {
@@ -35,8 +35,8 @@ function add(emoji) {
   frequently[id] || (frequently[id] = 0)
   frequently[id] += 1
 
-  store.set('last', id)
-  store.set('frequently', frequently)
+  storeSet('last', id)
+  storeSet('frequently', frequently)
 }
 
 function get(perLine) {
@@ -68,7 +68,7 @@ function get(perLine) {
     .reverse()
   const sliced = sorted.slice(0, quantity)
 
-  const last = store.get('last')
+  const last = storeGet('last')
 
   if (last && sliced.indexOf(last) == -1) {
     sliced.pop()
@@ -78,4 +78,4 @@ function get(perLine) {
   return sliced
 }
 
-export default { add, get }
+export { add, get }
