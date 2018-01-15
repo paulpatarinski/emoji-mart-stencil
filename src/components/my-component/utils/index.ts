@@ -3,6 +3,7 @@ import data from '../data'
 import stringFromCodePoint from '../polyfills/stringFromCodePoint'
 
 const _JSON = JSON
+
 const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
 const SKINS = ['1F3FA', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
 
@@ -11,7 +12,7 @@ function unifiedToNative(unified) {
     codePoints = unicodes.map(u => `0x${u}`)
 
   return stringFromCodePoint.apply(null, codePoints)
-};
+}
 
 function sanitize(emoji) {
   var {
@@ -49,13 +50,13 @@ function sanitize(emoji) {
     emoticons,
     unified: unified.toLowerCase(),
     skin: skin_tone || (skin_variations ? 1 : null),
-    native: this.unifiedToNative(unified),
+    native: unifiedToNative(unified),
   }
-};
+}
 
 function getSanitizedData(emoji, skin, set) {
-  return this.sanitize(this.getData(emoji, skin, set))
-};
+  return sanitize(getData(emoji, skin, set))
+}
 
 function getData(emoji, skin, set) {
   var emojiData: any = {}
@@ -124,7 +125,7 @@ function getData(emoji, skin, set) {
   }
 
   if (emojiData.variations && emojiData.variations.length) {
-    emojiData = JSON.parse(this._JSON.stringify(emojiData))
+    emojiData = JSON.parse(_JSON.stringify(emojiData))
     emojiData.unified = emojiData.variations.shift()
   }
 
@@ -141,8 +142,8 @@ function uniq(arr) {
 }
 
 function intersect(a, b) {
-  const uniqA = this.uniq(a)
-  const uniqB = this.uniq(b)
+  const uniqA = uniq(a)
+  const uniqB = uniq(b)
 
   return uniqA.filter(item => uniqB.indexOf(item) >= 0)
 }
@@ -159,7 +160,7 @@ function deepMerge(a, b) {
     }
 
     if (typeof value === 'object') {
-      value = this.deepMerge(originalValue, value)
+      value = deepMerge(originalValue, value)
     }
 
     o[key] = value
