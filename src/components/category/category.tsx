@@ -35,16 +35,11 @@ export class Category {
 
     @Method()
     getTop() {
-        console.log('HERE')
-
         return this._top;
     }
 
     componentDidLoad() {
         this._parent = this._container.parentNode
-
-        console.log('PARENT');
-        console.log(this._parent);
 
         this._margin = 0
         this._minMargin = 0

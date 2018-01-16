@@ -9,8 +9,6 @@ import { add as frequentlyAdd } from '../../lib/emoji-mart/utils/frequently'
 import { deepMerge, measureScrollbar } from '../../lib/emoji-mart/utils'
 
 import Emoji from '../emoji/emoji';
-//TODO: Add all these components
-// import { Anchors, Category, Emoji, Preview, Search } from '.'
 
 const RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
 const SEARCH_CATEGORY = {
@@ -136,7 +134,7 @@ export class Picker {
     @Prop() recent: any;
     @Prop() include: any;
     @Prop() exclude: any;
-    @Prop() onClick: any = () => { };
+    @Prop() onClick: any = console.log
     @Prop() emojiSize: any = 24;
     @Prop() perLine: any = 9;
     @Prop() i18n: any = {};
@@ -179,12 +177,14 @@ export class Picker {
     @State() _search: any;
     @State() _anchors: any;
 
+    //TODO: Check if event exists in stencil 
     componentWillReceiveProps(props) {
         if (props.skin && !storeGet('skin')) {
             this.skin = props.skin;
         }
     }
 
+    //TODO: Check if event exists in stencil 
     componentDidMount() {
         if (this._firstRender) {
             this.testStickyPosition()
@@ -194,10 +194,11 @@ export class Picker {
         }
     }
 
-    componentDidUpdate() {
-        // this.updateCategoriesSize()
-        this.handleScroll()
-    }
+    // componentDidUpdate() {
+    //     //TODO: calling this causes infinte calls to memoize
+    //     this.updateCategoriesSize()
+    //     this.handleScroll()
+    // }
 
     componentWillUnmount() {
         SEARCH_CATEGORY.emojis = null
@@ -305,9 +306,9 @@ export class Picker {
                 if (component) {
                     let active = component.handleScroll(scrollTop)
 
-                    if (!minTop || component.top < minTop) {
-                        if (component.top > 0) {
-                            minTop = component.top
+                    if (!minTop || component.getTop() < minTop) {
+                        if (component.getTop() > 0) {
+                            minTop = component.getTop()
                         }
                     }
 
@@ -318,7 +319,6 @@ export class Picker {
             }
 
             if (scrollTop < minTop) {
-                console.log('filtering');
                 activeCategory = this._categories.filter(
                     category => !(category.anchor === false)
                 )[0]
@@ -340,8 +340,6 @@ export class Picker {
     }
 
     handleSearch(emojis) {
-        console.log('SEARCH');
-        console.log(emojis);
         SEARCH_CATEGORY.emojis = emojis
 
         for (let i = 0, l = this._categories.length; i < l; i++) {
@@ -372,7 +370,6 @@ export class Picker {
         scrollToComponent = () => {
             if (component) {
                 let { top } = component
-                console.log(component);
 
                 if (category.first) {
                     top = 0
@@ -380,7 +377,6 @@ export class Picker {
                     top += 1
                 }
                 _scroll.scrollTop = top
-
             }
         }
 

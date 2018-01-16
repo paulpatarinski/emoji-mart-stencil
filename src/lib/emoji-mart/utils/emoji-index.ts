@@ -41,7 +41,6 @@ function search(
   { emojisToShowFilter, maxResults, include, exclude, custom = [] }: any = {}
 ) {
   addCustomToPool(custom, originalPool)
-  console.log(value);
   maxResults || (maxResults = 75)
   include || (include = [])
   exclude || (exclude = [])
