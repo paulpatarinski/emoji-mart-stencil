@@ -150,6 +150,7 @@ export class Picker {
         `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`;
     @Prop() emojisToShowFilter: any;
     @Prop() showPreview: boolean = true;
+    @Prop() showAnchors: boolean = true;
     @Prop() emojiTooltip: any = false;
     @Prop() autoFocus: boolean = false;
     @Prop() custom: any = [];
@@ -470,7 +471,7 @@ export class Picker {
             <div style={{ width: this.width, ...pickerStyle }} class="emoji-mart">
                 {/* // TODO : ADD BACK */}
 
-                <div class="emoji-mart-bar">
+                {this.showAnchors && <div class="emoji-mart-bar">
                     <emart-anchors
                         ref={this.setAnchorsRef}
                         i18n={this._i18n}
@@ -478,7 +479,7 @@ export class Picker {
                         categories={this._categories}
                         onAnchorClick={this.handleAnchorClick}
                     ></emart-anchors>
-                </div>
+                </div>}
 
                 <emart-search
                     ref={this.setSearchRef}
