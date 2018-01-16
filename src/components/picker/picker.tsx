@@ -134,24 +134,24 @@ export class Picker {
     @Prop() recent: any;
     @Prop() include: any;
     @Prop() exclude: any;
-    @Prop() onClick: any = () => { };
-    @Prop() emojiSize: any = 24;
-    @Prop() perLine: any = 9;
+    @Prop() onEmojiClicked: any = () => { };
+    @Prop() emojiSize: number = 24;
+    @Prop() perLine: number = 9;
     @Prop() i18n: any = {};
     @Prop() pickerStyle: any = {};
     @Prop() width: string = "500px";
-    @Prop() emoji: any = 'department_store';
-    @Prop() color: any = '#ae65c5';
-    @Prop() set: any = 'apple';
+    @Prop() emoji: string = 'department_store';
+    @Prop() color: string = '#ae65c5';
+    @Prop() set: string = 'apple';
     @Prop() skin: any = 1;
     @Prop() native: any = false;
     @Prop() sheetSize: any = 64;
     @Prop() backgroundImageFn: any = (set, sheetSize) =>
         `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`;
     @Prop() emojisToShowFilter: any;
-    @Prop() showPreview: any = true;
+    @Prop() showPreview: boolean = true;
     @Prop() emojiTooltip: any = false;
-    @Prop() autoFocus: any = false;
+    @Prop() autoFocus: boolean = false;
     @Prop() custom: any = [];
     @Prop() title: string = "Emoji Mart™";
 
@@ -251,7 +251,7 @@ export class Picker {
     }
 
     handleEmojiClick(emoji, e) {
-        this.onClick(emoji, e)
+        this.onEmojiClicked(emoji, e)
         if (!this._hideRecent && !this.recent) frequentlyAdd(emoji)
 
         var component = this._categoryRefs['category-1']
@@ -462,6 +462,7 @@ export class Picker {
             autoFocus,
       } = this,
             { skin } = this
+
         // TODO: calculating the width causes an infinite re-render 
         // width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
 
