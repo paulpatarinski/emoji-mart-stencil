@@ -134,7 +134,7 @@ export class Picker {
     @Prop() recent: any;
     @Prop() include: any;
     @Prop() exclude: any;
-    @Prop() onClick: any = console.log
+    @Prop() onClick: any = () => { };
     @Prop() emojiSize: any = 24;
     @Prop() perLine: any = 9;
     @Prop() i18n: any = {};
