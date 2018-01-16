@@ -141,6 +141,7 @@ export class Picker {
     @Prop() perLine: any = 9;
     @Prop() i18n: any = {};
     @Prop() pickerStyle: any = {};
+    @Prop() width: string = "500px";
     @Prop() emoji: any = 'department_store';
     @Prop() color: any = '#ae65c5';
     @Prop() set: any = 'apple';
@@ -439,6 +440,7 @@ export class Picker {
         this._categoryRefs[name] = c
     }
 
+    //TODO: something is causing a constant re-render
     render() {
         var {
         perLine,
@@ -458,11 +460,12 @@ export class Picker {
             recent,
             autoFocus,
       } = this,
-            { skin } = this,
-            width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
+            { skin } = this
+        // TODO: calculating the width causes an infinite re-render 
+        // width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
 
         return (
-            <div style={{ width: width, ...pickerStyle }} class="emoji-mart">
+            <div style={{ width: this.width, ...pickerStyle }} class="emoji-mart">
                 {/* // TODO : ADD BACK */}
 
                 <div class="emoji-mart-bar">
@@ -495,8 +498,8 @@ export class Picker {
                         return (
                             <emart-category
                                 ref={this.setCategoryRef.bind(this, `category-${i}`)}
-                                category-key={category.name}
-                                category-id={category.id}
+                                categoryKey={category.name}
+                                categoryId={category.id}
                                 name={category.name}
                                 emojis={category.emojis}
                                 perLine={perLine}
