@@ -9,7 +9,7 @@ import { I18N } from '../../lib/emoji-mart/data/I18N';
 export class Search {
     constructor() {
         this.setRef = this.setRef.bind(this)
-        this.handleChange = this.handleChange.bind(this)
+        this.handleInput = this.handleInput.bind(this)
     }
 
     @Prop() onSearch: any = () => { };
@@ -23,7 +23,7 @@ export class Search {
 
     @State() _input: any;
 
-    handleChange() {
+    handleInput() {
         var value = this._input.value
 
         this.onSearch(
@@ -51,7 +51,7 @@ export class Search {
             <input
                 ref={this.setRef}
                 type="text"
-                onChange={this.handleChange}
+                onInput={this.handleInput}
                 placeholder={this.i18n.search}
                 autoFocus={this.autoFocus}
             />
