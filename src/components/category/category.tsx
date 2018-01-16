@@ -116,11 +116,11 @@ export class Category {
     }
 
     getEmojis() {
-        var { name, emojis, recent, perLine } = this
+        var { emojis } = this
 
-        if (name == 'Recent') {
+        if (this.name == 'Recent') {
             let { custom } = this
-            let frequentlyUsed = recent || freqGet(perLine)
+            let frequentlyUsed = this.recent || freqGet(this.perLine)
 
             if (frequentlyUsed.length) {
                 emojis = frequentlyUsed
@@ -207,7 +207,7 @@ export class Category {
                     </span>
                 </div>
 
-                {emojis && emojis.map(emoji => <emart-emoji emoji={emoji} size={30} onOver={emojiProps.onOver} onLeave={emojiProps.onLeave}  ></emart-emoji>)}
+                {emojis && emojis.map(emoji => <emart-emoji emoji={emoji} size={30} onOver={emojiProps.onOver} onLeave={emojiProps.onLeave} onClick={emojiProps.onClick}  ></emart-emoji>)}
 
                 {emojis &&
                     !emojis.length && (

@@ -20,6 +20,7 @@ export class Emoji {
     @Prop() backgroundImageFn: any = (set, sheetSize) =>
         `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`;
 
+    @Prop() onClick: any;
     @Prop() onOver: any;
     @Prop() onLeave: any;
     @Prop() size: number;

@@ -523,7 +523,7 @@ export class Picker {
                                     backgroundImageFn: backgroundImageFn,
                                     onOver: this.handleEmojiOver,
                                     onLeave: this.handleEmojiLeave,
-                                    onClick: this.handleEmojiClick.bind(this, emoji),
+                                    onClick: this.handleEmojiClick,
                                 }}
                             />
                         )
