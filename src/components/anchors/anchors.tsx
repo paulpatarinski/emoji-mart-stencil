@@ -39,8 +39,6 @@ export class Anchors {
     }
 
     handleClick(e) {
-        console.log('CLICKED');
-        console.log(e);
         var index = e.currentTarget.getAttribute('data-index')
 
         this.onAnchorClick(this.categories[index], index)
@@ -56,6 +54,7 @@ export class Anchors {
                     return null
                 }
                 //TODO : find equivalent for key={id}
+                // TODO: if you click directly on the svg the browser throws an error toUpper undefined
                 return (
                     <span
                         title={this.i18n.categories[id]}
@@ -66,9 +65,7 @@ export class Anchors {
                             : ''}`}
                         style={{ color: isSelected ? this.color : null }}
                     >
-                        <div innerHTML={this.getSVG(id)}>
-
-                        </div>
+                        <div innerHTML={this.getSVG(id)} />
                         <span
                             class="emoji-mart-anchor-bar"
                             style={{ backgroundColor: this.color }}

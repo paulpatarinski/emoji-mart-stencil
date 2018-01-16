@@ -195,7 +195,7 @@ export class Picker {
     }
 
     componentDidUpdate() {
-        this.updateCategoriesSize()
+        // this.updateCategoriesSize()
         this.handleScroll()
     }
 
@@ -318,6 +318,7 @@ export class Picker {
             }
 
             if (scrollTop < minTop) {
+                console.log('filtering');
                 activeCategory = this._categories.filter(
                     category => !(category.anchor === false)
                 )[0]
@@ -339,6 +340,8 @@ export class Picker {
     }
 
     handleSearch(emojis) {
+        console.log('SEARCH');
+        console.log(emojis);
         SEARCH_CATEGORY.emojis = emojis
 
         for (let i = 0, l = this._categories.length; i < l; i++) {
@@ -369,6 +372,7 @@ export class Picker {
         scrollToComponent = () => {
             if (component) {
                 let { top } = component
+                console.log(component);
 
                 if (category.first) {
                     top = 0
@@ -376,6 +380,7 @@ export class Picker {
                     top += 1
                 }
                 _scroll.scrollTop = top
+
             }
         }
 

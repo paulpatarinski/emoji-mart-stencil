@@ -24,17 +24,20 @@ export class Category {
     @Prop() recent: string[];
     @Prop() custom: any;
     @Prop() i18n: any = I18N;
+    @Prop() top: number = -123.123;
 
     @State() _parent: any;
     @State() _container: any;
     @State() _margin: any;
     @State() _minMargin: any;
     @State() _label: any;
-    @State() _top: any;
     @State() _maxMargin: any;
 
     componentDidLoad() {
         this._parent = this._container.parentNode
+
+        console.log('PARENT');
+        console.log(this._parent);
 
         this._margin = 0
         this._minMargin = 0
@@ -89,7 +92,9 @@ export class Category {
         var { top: parentTop } = this._parent.getBoundingClientRect()
         var { height: labelHeight } = this._label.getBoundingClientRect()
 
-        this._top = top - parentTop + this._parent.scrollTop
+        var test = top - parentTop + this._parent.scrollTop;
+
+        this.top = test;
 
         if (height == 0) {
             this._maxMargin = 0
@@ -100,7 +105,7 @@ export class Category {
 
     @Method()
     handleScroll(scrollTop) {
-        var margin = scrollTop - this._top
+        var margin = scrollTop - this.top
         margin = margin < this._minMargin ? this._minMargin : margin
         margin = margin > this._maxMargin ? this._maxMargin : margin
 
