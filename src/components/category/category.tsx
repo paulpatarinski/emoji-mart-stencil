@@ -162,6 +162,12 @@ export class Category {
         this._container.style.display = display
     }
 
+    @Method()
+    forceUpdate() {
+        //This is a way to force an update https://github.com/ionic-team/stencil/issues/185
+        this.i18n = { ...this.i18n };
+    }
+
     setContainerRef(c) {
         this._container = c
     }
