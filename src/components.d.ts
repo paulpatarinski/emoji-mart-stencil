@@ -40,7 +40,6 @@ declare global {
       native?: boolean;
       perLine?: number;
       recent?: string[];
-      top?: number;
     }
   }
 }
