@@ -12,9 +12,19 @@ export class Preview {
   this.emoji = null;
  }
 
- @Prop() title: string;
- @Prop() idleEmoji: string;
- @Prop() emojiProps: EmojiProps;
+ @State() EMOJI_DATASOURCE_VERSION = "4.0.2";
+
+ @Prop() title: string = 'Emoji Mart™';
+ @Prop() idleEmoji: string = 'heart_eyes_cat';
+ @Prop() emojiProps: EmojiProps = {
+  native: false,
+  skin: 2,
+  size: 50,
+  set: 'apple',
+  sheetSize: 64,
+  backgroundImageFn: (set, sheetSize) =>
+   `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`
+ };
  @Prop() skinsProps: object;
  //TODO: figure out why this was on state instead of props
  @Prop() emoji: any;
