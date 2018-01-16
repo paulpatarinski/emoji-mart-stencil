@@ -332,7 +332,7 @@ export class Picker {
             let { _anchors } = this,
                 { name: categoryName } = activeCategory
 
-            if (_anchors.selected != categoryName) {
+            if (_anchors && _anchors.selected != categoryName) {
                 _anchors.selected = categoryName
             }
         }
