@@ -484,7 +484,7 @@ export class Picker {
                 <emart-search
                     ref={this.setSearchRef}
                     onSearch={this.handleSearch}
-                    i18n={this.i18n}
+                    i18n={this._i18n}
                     emojisToShowFilter={emojisToShowFilter}
                     include={include}
                     exclude={exclude}
