@@ -9,79 +9,6 @@ import {
 } from './components/emoji/emojiProps';
 
 import {
-  Anchors as EmartAnchors
-} from './components/anchors/anchors';
-
-declare global {
-  interface HTMLEmartAnchorsElement extends EmartAnchors, HTMLElement {
-  }
-  var HTMLEmartAnchorsElement: {
-    prototype: HTMLEmartAnchorsElement;
-    new (): HTMLEmartAnchorsElement;
-  };
-  interface HTMLElementTagNameMap {
-    "emart-anchors": HTMLEmartAnchorsElement;
-  }
-  interface ElementTagNameMap {
-    "emart-anchors": HTMLEmartAnchorsElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "emart-anchors": JSXElements.EmartAnchorsAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface EmartAnchorsAttributes extends HTMLAttributes {
-      categories?: any[];
-      color?: any;
-      i18n?: any;
-      onAnchorClick?: any;
-    }
-  }
-}
-
-
-import {
-  Category as EmartCategory
-} from './components/category/category';
-
-declare global {
-  interface HTMLEmartCategoryElement extends EmartCategory, HTMLElement {
-  }
-  var HTMLEmartCategoryElement: {
-    prototype: HTMLEmartCategoryElement;
-    new (): HTMLEmartCategoryElement;
-  };
-  interface HTMLElementTagNameMap {
-    "emart-category": HTMLEmartCategoryElement;
-  }
-  interface ElementTagNameMap {
-    "emart-category": HTMLEmartCategoryElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "emart-category": JSXElements.EmartCategoryAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface EmartCategoryAttributes extends HTMLAttributes {
-      categoryId?: any;
-      categoryKey?: any;
-      custom?: any;
-      emojiProps?: any;
-      emojis?: any;
-      hasStickyPosition?: boolean;
-      i18n?: any;
-      name?: string;
-      native?: boolean;
-      perLine?: number;
-      recent?: string[];
-    }
-  }
-}
-
-
-import {
   Emoji as EmartEmoji
 } from './components/emoji/emoji';
 
@@ -125,58 +52,6 @@ declare global {
 
 
 import {
-  Picker as EmartPicker
-} from './components/picker/picker';
-
-declare global {
-  interface HTMLEmartPickerElement extends EmartPicker, HTMLElement {
-  }
-  var HTMLEmartPickerElement: {
-    prototype: HTMLEmartPickerElement;
-    new (): HTMLEmartPickerElement;
-  };
-  interface HTMLElementTagNameMap {
-    "emart-picker": HTMLEmartPickerElement;
-  }
-  interface ElementTagNameMap {
-    "emart-picker": HTMLEmartPickerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "emart-picker": JSXElements.EmartPickerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface EmartPickerAttributes extends HTMLAttributes {
-      autoFocus?: boolean;
-      backgroundImageFn?: any;
-      color?: string;
-      custom?: any;
-      emoji?: string;
-      emojiSize?: number;
-      emojisToShowFilter?: any;
-      emojiTooltip?: any;
-      exclude?: any;
-      i18n?: any;
-      include?: any;
-      native?: any;
-      onEmojiClicked?: any;
-      perLine?: number;
-      pickerStyle?: any;
-      recent?: any;
-      set?: string;
-      sheetSize?: any;
-      showAnchors?: boolean;
-      showPreview?: boolean;
-      skin?: any;
-      title?: string;
-      width?: string;
-    }
-  }
-}
-
-
-import {
   Preview as EmartPreview
 } from './components/preview/preview';
 
@@ -205,43 +80,6 @@ declare global {
       idleEmoji?: string;
       skinsProps?: object;
       title?: string;
-    }
-  }
-}
-
-
-import {
-  Search as EmartSearch
-} from './components/search/search';
-
-declare global {
-  interface HTMLEmartSearchElement extends EmartSearch, HTMLElement {
-  }
-  var HTMLEmartSearchElement: {
-    prototype: HTMLEmartSearchElement;
-    new (): HTMLEmartSearchElement;
-  };
-  interface HTMLElementTagNameMap {
-    "emart-search": HTMLEmartSearchElement;
-  }
-  interface ElementTagNameMap {
-    "emart-search": HTMLEmartSearchElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "emart-search": JSXElements.EmartSearchAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface EmartSearchAttributes extends HTMLAttributes {
-      autoFocus?: boolean;
-      custom?: any;
-      emojisToShowFilter?: any;
-      exclude?: any;
-      i18n?: any;
-      include?: any;
-      maxResults?: number;
-      onSearch?: any;
     }
   }
 }

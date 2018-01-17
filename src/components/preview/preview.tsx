@@ -77,7 +77,7 @@ export class Preview {
           <div class="emoji-mart-preview-emoji">
             {this.idleEmoji &&
               this.idleEmoji.length &&
-              <emart-emoji emoji={this.idleEmoji} native={this.emojiProps.native} skin={this.emojiProps.skin} size={this.emojiProps.size} set={this.emojiProps.set} sheet-size={this.emojiProps.sheetSize} background-image-fn={this.emojiProps.backgroundImageFn} />
+              <emart-emoji emoji={this.idleEmoji} native={this.emojiProps.native} skin={this.emojiProps.skin} size={this.emojiProps.size} set={this.emojiProps.set} sheet-size={this.emojiProps.sheetSize} backgroundImageFn={this.emojiProps.backgroundImageFn} />
             }
           </div>
 
