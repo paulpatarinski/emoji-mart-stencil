@@ -8,8 +8,6 @@ import { get as storeGet, update as storeUpdate } from '../../lib/emoji-mart/uti
 import { add as frequentlyAdd } from '../../lib/emoji-mart/utils/frequently'
 import { deepMerge, measureScrollbar } from '../../lib/emoji-mart/utils'
 
-import Emoji from '../emoji/emoji';
-
 const RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
 const SEARCH_CATEGORY = {
     id: 'search',
@@ -444,31 +442,11 @@ export class Picker {
 
     //TODO: something is causing a constant re-render
     render() {
-        var {
-        perLine,
-            emojiSize,
-            set,
-            sheetSize,
-            pickerStyle,
-            title,
-            emoji,
-            native,
-            backgroundImageFn,
-            emojisToShowFilter,
-            showPreview,
-            emojiTooltip,
-            include,
-            exclude,
-            recent,
-            autoFocus,
-      } = this,
-            { skin } = this
-
         // TODO: calculating the width causes an infinite re-render 
         // width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
 
         return (
-            <div style={{ width: this.width, ...pickerStyle }} class="emoji-mart">
+            <div style={{ width: this.width, ...this.pickerStyle }} class="emoji-mart">
                 {/* // TODO : ADD BACK */}
 
                 {this.showAnchors && <div class="emoji-mart-bar">
@@ -485,11 +463,11 @@ export class Picker {
                     ref={this.setSearchRef}
                     onSearch={this.handleSearch}
                     i18n={this._i18n}
-                    emojisToShowFilter={emojisToShowFilter}
-                    include={include}
-                    exclude={exclude}
+                    emojisToShowFilter={this.emojisToShowFilter}
+                    include={this.include}
+                    exclude={this.exclude}
                     custom={CUSTOM_CATEGORY.emojis}
-                    autoFocus={autoFocus}
+                    autoFocus={this.autoFocus}
                 />
 
                 <div
@@ -505,25 +483,25 @@ export class Picker {
                                 categoryId={category.id}
                                 name={category.name}
                                 emojis={category.emojis}
-                                perLine={perLine}
-                                native={native}
+                                perLine={this.perLine}
+                                native={this.native}
                                 hasStickyPosition={this._hasStickyPosition}
                                 i18n={this._i18n}
-                                recent={category.id == RECENT_CATEGORY.id ? recent : undefined}
+                                recent={category.id == RECENT_CATEGORY.id ? this.recent : undefined}
                                 custom={
                                     category.id == RECENT_CATEGORY.id
                                         ? CUSTOM_CATEGORY.emojis
                                         : undefined
                                 }
                                 emojiProps={{
-                                    native: native,
-                                    skin: skin,
-                                    size: emojiSize,
-                                    set: set,
-                                    sheetSize: sheetSize,
-                                    forceSize: native,
-                                    tooltip: emojiTooltip,
-                                    backgroundImageFn: backgroundImageFn,
+                                    native: this.native,
+                                    skin: this.skin,
+                                    size: this.emojiSize,
+                                    set: this.set,
+                                    sheetSize: this.sheetSize,
+                                    forceSize: this.native,
+                                    tooltip: this.emojiTooltip,
+                                    backgroundImageFn: this.backgroundImageFn,
                                     onOver: this.handleEmojiOver,
                                     onLeave: this.handleEmojiLeave,
                                     onClick: this.handleEmojiClick,
@@ -533,22 +511,22 @@ export class Picker {
                     })}
                 </div>
                 {
-                    showPreview && (
+                    this.showPreview && (
                         <div class="emoji-mart-bar">
                             <emart-preview
                                 ref={this.setPreviewRef}
-                                title={title}
-                                idleEmoji={emoji}
+                                title={this.title}
+                                idleEmoji={this.emoji}
                                 emojiProps={{
-                                    native: native,
+                                    native: this.native,
                                     size: 38,
-                                    skin: skin,
-                                    set: set,
-                                    sheetSize: sheetSize,
-                                    backgroundImageFn: backgroundImageFn
+                                    skin: this.skin,
+                                    set: this.set,
+                                    sheetSize: this.sheetSize,
+                                    backgroundImageFn: this.backgroundImageFn
                                 }}
                                 skinsProps={{
-                                    skin: skin,
+                                    skin: this.skin,
                                     onChange: this.handleSkinChange,
                                 }}
                             />
