@@ -19,7 +19,7 @@ export class Preview {
   @Prop() emojiProps: EmojiProps = {
     native: false,
     skin: 1,
-    size: 50,
+    size: 40,
     set: 'apple',
     sheetSize: 64,
     backgroundImageFn: (set, sheetSize) =>
