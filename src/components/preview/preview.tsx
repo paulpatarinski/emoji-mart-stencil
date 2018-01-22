@@ -49,7 +49,7 @@ export class Preview {
         <div class="emoji-mart-preview">
           <div class="emoji-mart-preview-emoji">
             {/* TODO : figure out if there is an equivalent for ...emojiProps */}
-            <emart-emoji emoji={this.emoji} skin={this.emojiProps.skin} set={this.emojiProps.set} sheet-size={this.emojiProps.sheetSize} native={this.emojiProps.native} force-size={this.emojiProps.forceSize} />
+            <emart-emoji emoji={this.emoji} native={this.emojiProps.native} skin={this.emojiProps.skin} size={this.emojiProps.size} set={this.emojiProps.set} sheet-size={this.emojiProps.sheetSize} force-size={this.emojiProps.forceSize} backgroundImageFn={this.emojiProps.backgroundImageFn} />
           </div>
 
           <div class="emoji-mart-preview-data">
@@ -77,7 +77,7 @@ export class Preview {
           <div class="emoji-mart-preview-emoji">
             {this.idleEmoji &&
               this.idleEmoji.length &&
-              <emart-emoji emoji={this.idleEmoji} native={this.emojiProps.native} skin={this.emojiProps.skin} size={this.emojiProps.size} set={this.emojiProps.set} sheet-size={this.emojiProps.sheetSize} backgroundImageFn={this.emojiProps.backgroundImageFn} />
+              <emart-emoji emoji={this.idleEmoji} native={this.emojiProps.native} skin={this.emojiProps.skin} size={this.emojiProps.size} set={this.emojiProps.set} sheet-size={this.emojiProps.sheetSize} force-size={this.emojiProps.forceSize} backgroundImageFn={this.emojiProps.backgroundImageFn} />
             }
           </div>
 
