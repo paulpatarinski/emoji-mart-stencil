@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Prop, State, Method } from '@stencil/core';
 import '../../lib/emoji-mart/vendor/raf-polyfill'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
 
@@ -175,6 +175,12 @@ export class Picker {
     @State() _scrollHeight: any;
     @State() _search: any;
     @State() _anchors: any;
+
+    @Method()
+    clearSearch() {
+        this.handleSearch(null);
+        this._search.clear();
+    }
 
     //TODO: Check if event exists in stencil 
     componentWillReceiveProps(props) {
@@ -380,8 +386,7 @@ export class Picker {
         }
 
         if (SEARCH_CATEGORY.emojis) {
-            this.handleSearch(null)
-            this._search.clear()
+            this.clearSearch()
 
             window.requestAnimationFrame(scrollToComponent)
         } else {
