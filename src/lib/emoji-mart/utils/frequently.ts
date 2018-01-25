@@ -15,8 +15,7 @@ const DEFAULTS = [
   'weary',
   'sob',
   'sunglasses',
-  'heart',
-  'poop',
+  'heart'
 ]
 
 let frequently, initialized
