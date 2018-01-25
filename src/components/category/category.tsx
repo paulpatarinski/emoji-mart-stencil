@@ -217,19 +217,20 @@ export class Category {
                     </span>
                 </div>
 
-                {emojis && emojis.map(emoji => <emart-emoji emoji={emoji} skin={emojiProps.skin} size={emojiProps.size} set={emojiProps.set} sheetSize={emojiProps.sheetSize} forceSize={emojiProps.forceSize} tooltip={emojiProps.tooltip} backgroundImageFn={emojiProps.backgroundImageFn} onOver={emojiProps.onOver} onLeave={emojiProps.onLeave} onClick={emojiProps.onClick}  ></emart-emoji>)}
+                {emojis && emojis.map(emoji => <emart-emoji emoji={emoji} {...emojiProps} ></emart-emoji>)}
 
                 {emojis &&
                     !emojis.length && (
                         <div>
                             <div>
                                 <emart-emoji
+                                    {...emojiProps}
                                     size={38}
                                     emoji='sleuth_or_spy'
-                                    backgroundImageFn={emojiProps.backgroundImageFn}
                                     on-over={null}
                                     on-leave={null}
-                                    on-click={null}>
+                                    on-click={null}
+                                >
                                 </emart-emoji>
                             </div>
 
