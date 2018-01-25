@@ -23,6 +23,83 @@ const CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', emojis: [] }
 
 export class Picker {
     constructor() {
+        this.setAnchorsRef = this.setAnchorsRef.bind(this)
+        this.handleAnchorClick = this.handleAnchorClick.bind(this)
+        this.setSearchRef = this.setSearchRef.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
+        this.setScrollRef = this.setScrollRef.bind(this)
+        this.handleScroll = this.handleScroll.bind(this)
+        this.handleScrollPaint = this.handleScrollPaint.bind(this)
+        this.handleEmojiOver = this.handleEmojiOver.bind(this)
+        this.handleEmojiLeave = this.handleEmojiLeave.bind(this)
+        this.handleEmojiClick = this.handleEmojiClick.bind(this)
+        this.setPreviewRef = this.setPreviewRef.bind(this)
+        this.handleSkinChange = this.handleSkinChange.bind(this)
+    }
+
+    @State() EMOJI_DATASOURCE_VERSION = "4.0.2";
+
+    @Prop() recent: any;
+    @Prop() include: any;
+    @Prop() exclude: any;
+    @Prop() onEmojiClicked: any = () => { };
+    @Prop() emojiSize: number = 24;
+    @Prop() perLine: number = 9;
+    @Prop() i18n: any = {};
+    @Prop() pickerStyle: any = {};
+    @Prop() width: string = "500px";
+    @Prop() emoji: string = 'department_store';
+    @Prop() color: string = '#ae65c5';
+    @Prop() set: string = 'apple';
+    @Prop() skin: any = 1;
+    @Prop() native: any = false;
+    @Prop() sheetSize: any = 64;
+    @Prop() backgroundImageFn: any = (set, sheetSize) =>
+        `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`;
+    @Prop() emojisToShowFilter: any;
+    @Prop() showPreview: boolean = true;
+    @Prop() showAnchors: boolean = true;
+    @Prop() emojiTooltip: any = false;
+    @Prop() autoFocus: boolean = false;
+    @Prop() custom: any = [];
+    @Prop() title: string = "Emoji Mart™";
+
+    @State() _i18n = deepMerge(I18N, this.i18n);
+    @State() _state = {
+        skin: storeGet('skin') || this.skin,
+        firstRender: true,
+    };
+
+    @State() _categories = [];
+    @State() _hideRecent;
+    @State() _firstRender;
+    @State() _firstRenderTimeout;
+    @State() _leaveTimeout;
+    @State() _hasStickyPosition;
+    @State() _preview;
+    @State() _categoryRefs: any = {};
+    @State() _scroll: any;
+    @State() _waitingForPaint: any;
+    @State() _scrollTop: any;
+    @State() _clientHeight: any;
+    @State() _scrollHeight: any;
+    @State() _search: any;
+    @State() _anchors: any;
+
+    @Method()
+    clearSearch() {
+        this.handleSearch(null);
+        this._search.clear();
+    }
+
+    //TODO: Check if event exists in stencil 
+    componentWillReceiveProps(props) {
+        if (props.skin && !storeGet('skin')) {
+            this.skin = props.skin;
+        }
+    }
+
+    componentWillLoad() {
         let allCategories = [].concat(data.categories)
 
         if (this.custom.length > 0) {
@@ -111,86 +188,8 @@ export class Picker {
             this._categories[0].first = true
         }
 
-        this._categories.unshift(SEARCH_CATEGORY)
+        this._categories.unshift(SEARCH_CATEGORY);
 
-        this.setAnchorsRef = this.setAnchorsRef.bind(this)
-        this.handleAnchorClick = this.handleAnchorClick.bind(this)
-        this.setSearchRef = this.setSearchRef.bind(this)
-        this.handleSearch = this.handleSearch.bind(this)
-        this.setScrollRef = this.setScrollRef.bind(this)
-        this.handleScroll = this.handleScroll.bind(this)
-        this.handleScrollPaint = this.handleScrollPaint.bind(this)
-        this.handleEmojiOver = this.handleEmojiOver.bind(this)
-        this.handleEmojiLeave = this.handleEmojiLeave.bind(this)
-        this.handleEmojiClick = this.handleEmojiClick.bind(this)
-        this.setPreviewRef = this.setPreviewRef.bind(this)
-        this.handleSkinChange = this.handleSkinChange.bind(this)
-    }
-
-    @State() EMOJI_DATASOURCE_VERSION = "4.0.2";
-
-    @Prop() recent: any;
-    @Prop() include: any;
-    @Prop() exclude: any;
-    @Prop() onEmojiClicked: any = () => { };
-    @Prop() emojiSize: number = 24;
-    @Prop() perLine: number = 9;
-    @Prop() i18n: any = {};
-    @Prop() pickerStyle: any = {};
-    @Prop() width: string = "500px";
-    @Prop() emoji: string = 'department_store';
-    @Prop() color: string = '#ae65c5';
-    @Prop() set: string = 'apple';
-    @Prop() skin: any = 1;
-    @Prop() native: any = false;
-    @Prop() sheetSize: any = 64;
-    @Prop() backgroundImageFn: any = (set, sheetSize) =>
-        `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`;
-    @Prop() emojisToShowFilter: any;
-    @Prop() showPreview: boolean = true;
-    @Prop() showAnchors: boolean = true;
-    @Prop() emojiTooltip: any = false;
-    @Prop() autoFocus: boolean = false;
-    @Prop() custom: any = [];
-    @Prop() title: string = "Emoji Mart™";
-
-    @State() _i18n = deepMerge(I18N, this.i18n);
-    @State() _state = {
-        skin: storeGet('skin') || this.skin,
-        firstRender: true,
-    };
-
-    @State() _categories = [];
-    @State() _hideRecent;
-    @State() _firstRender;
-    @State() _firstRenderTimeout;
-    @State() _leaveTimeout;
-    @State() _hasStickyPosition;
-    @State() _preview;
-    @State() _categoryRefs: any = {};
-    @State() _scroll: any;
-    @State() _waitingForPaint: any;
-    @State() _scrollTop: any;
-    @State() _clientHeight: any;
-    @State() _scrollHeight: any;
-    @State() _search: any;
-    @State() _anchors: any;
-
-    @Method()
-    clearSearch() {
-        this.handleSearch(null);
-        this._search.clear();
-    }
-
-    //TODO: Check if event exists in stencil 
-    componentWillReceiveProps(props) {
-        if (props.skin && !storeGet('skin')) {
-            this.skin = props.skin;
-        }
-    }
-
-    //TODO: Check if event exists in stencil 
-    componentDidMount() {
         if (this._firstRender) {
             this.testStickyPosition()
             this._firstRenderTimeout = setTimeout(() => {
@@ -370,7 +369,6 @@ export class Picker {
     }
 
     handleAnchorClick(category, i) {
-        //TODO : figure out why emojis are not being filtered
         var component = this._categoryRefs[`category-${i}`],
             { _scroll, _anchors } = this,
             scrollToComponent = null
