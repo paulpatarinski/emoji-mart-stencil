@@ -357,7 +357,10 @@ export class Picker {
         }
 
         this.forceUpdate()
-        this._scroll.scrollTop = 0
+
+        if (this._scroll.scrollTop)
+            this._scroll.scrollTop = 0
+
         this.handleScroll()
     }
 
