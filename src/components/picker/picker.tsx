@@ -51,7 +51,7 @@ export class Picker {
     @Prop() emoji: string = 'department_store';
     @Prop() color: string = '#ae65c5';
     @Prop() set: string = 'apple';
-    @Prop() skin: any = 1;
+    @Prop() skin: any = storeGet('skin') || this.skin;
     @Prop() native: any = false;
     @Prop() sheetSize: any = 64;
     @Prop() backgroundImageFn: any = (set, sheetSize) =>
@@ -65,14 +65,9 @@ export class Picker {
     @Prop() title: string = "Emoji Mart™";
 
     @State() _i18n = deepMerge(I18N, this.i18n);
-    @State() _state = {
-        skin: storeGet('skin') || this.skin,
-        firstRender: true,
-    };
-
     @State() _categories = [];
     @State() _hideRecent;
-    @State() _firstRender;
+    @State() _firstRender = true;
     @State() _firstRenderTimeout;
     @State() _leaveTimeout;
     @State() _hasStickyPosition;
@@ -189,9 +184,13 @@ export class Picker {
         }
 
         this._categories.unshift(SEARCH_CATEGORY);
+    }
 
+    componentDidLoad() {
         if (this._firstRender) {
-            this.testStickyPosition()
+            //TODO: figure out why this is happening & fix it
+            //Calling this causes a weird flicker & shift up of the emojis on mobile
+            // this.testStickyPosition()
             this._firstRenderTimeout = setTimeout(() => {
                 this._firstRender = false;
             }, 60)
@@ -204,7 +203,7 @@ export class Picker {
     //     this.handleScroll()
     // }
 
-    componentWillUnmount() {
+    componentDidUnload() {
         SEARCH_CATEGORY.emojis = null
 
         clearTimeout(this._leaveTimeout)
