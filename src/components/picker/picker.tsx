@@ -416,9 +416,7 @@ export class Picker {
     }
 
     getCategories() {
-        return this._firstRender
-            ? this._categories.slice(0, 3)
-            : this._categories
+        return this._categories
     }
 
     setAnchorsRef(c) {
