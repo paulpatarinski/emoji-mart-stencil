@@ -26,13 +26,13 @@ export class Category {
     @Prop() i18n: any = I18N;
     @Prop() allEmojisLoaded: any = () => { };;
 
-    @State() _parent: any;
-    @State() _container: any;
-    @State() _margin: any;
-    @State() _minMargin: any;
-    @State() _label: any;
-    @State() _maxMargin: any;
-    @State() _top: number;
+    _parent: any;
+    _container: any;
+    _margin: any;
+    _minMargin: any;
+    _label: any;
+    _maxMargin: any;
+    _top: number;
 
     @Method()
     getTop() {
