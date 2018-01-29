@@ -189,15 +189,14 @@ export class Picker {
     }
 
     componentDidLoad() {
-        // TODO: Causes extra re - render
-        // if (this._firstRender) {
-        //     //TODO: figure out why this is happening & fix it
-        //     //Calling this causes a weird flicker & shift up of the emojis on mobile
-        //     // this.testStickyPosition()
-        //     this._firstRenderTimeout = setTimeout(() => {
-        //         this._firstRender = false;
-        //     }, 60)
-        // }
+        if (this._firstRender) {
+            //TODO: figure out why this is happening & fix it
+            //Calling this causes a weird flicker & shift up of the emojis on mobile
+            // this.testStickyPosition()
+            this._firstRenderTimeout = setTimeout(() => {
+                this._firstRender = false;
+            }, 60)
+        }
     }
 
     // componentDidUpdate() {
