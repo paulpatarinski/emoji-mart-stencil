@@ -64,22 +64,22 @@ export class Picker {
     @Prop() custom: any = [];
     @Prop() title: string = "Emoji Mart™";
 
-    @State() _i18n = deepMerge(I18N, this.i18n);
+    _i18n = deepMerge(I18N, this.i18n);
     _categories = [];
     _hideRecent;
-    @State() _firstRender = true;
-    @State() _firstRenderTimeout;
-    @State() _leaveTimeout;
-    @State() _hasStickyPosition;
-    @State() _preview;
-    @State() _categoryRefs: any = {};
-    @State() _scroll: any;
-    @State() _waitingForPaint: any;
-    @State() _scrollTop: any;
-    @State() _clientHeight: any;
-    @State() _scrollHeight: any;
-    @State() _search: any;
-    @State() _anchors: any;
+    _firstRender = true;
+    _firstRenderTimeout;
+    _leaveTimeout;
+    _hasStickyPosition;
+    _preview;
+    _categoryRefs: any = {};
+    _scroll: any;
+    _waitingForPaint: any;
+    _scrollTop: any;
+    _clientHeight: any;
+    _scrollHeight: any;
+    _search: any;
+    _anchors: any;
 
     @Method()
     clearSearch() {
