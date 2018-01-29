@@ -65,8 +65,8 @@ export class Picker {
     @Prop() title: string = "Emoji Mart™";
 
     @State() _i18n = deepMerge(I18N, this.i18n);
-    @State() _categories = [];
-    @State() _hideRecent;
+    _categories = [];
+    _hideRecent;
     @State() _firstRender = true;
     @State() _firstRenderTimeout;
     @State() _leaveTimeout;
@@ -184,17 +184,20 @@ export class Picker {
         }
 
         this._categories.unshift(SEARCH_CATEGORY);
+        console.log('WILL LOAD DONE');
+
     }
 
     componentDidLoad() {
-        if (this._firstRender) {
-            //TODO: figure out why this is happening & fix it
-            //Calling this causes a weird flicker & shift up of the emojis on mobile
-            // this.testStickyPosition()
-            this._firstRenderTimeout = setTimeout(() => {
-                this._firstRender = false;
-            }, 60)
-        }
+        // TODO: Causes extra re - render
+        // if (this._firstRender) {
+        //     //TODO: figure out why this is happening & fix it
+        //     //Calling this causes a weird flicker & shift up of the emojis on mobile
+        //     // this.testStickyPosition()
+        //     this._firstRenderTimeout = setTimeout(() => {
+        //         this._firstRender = false;
+        //     }, 60)
+        // }
     }
 
     // componentDidUpdate() {
@@ -445,8 +448,10 @@ export class Picker {
 
     //TODO: something is causing a constant re-render
     render() {
+        console.log('RE-RENDER');
         // TODO: calculating the width causes an infinite re-render 
         // width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
+        // return (<p>Hello</p>)
 
         return (
             <div style={{ width: this.width, ...this.pickerStyle }} class="emoji-mart">
