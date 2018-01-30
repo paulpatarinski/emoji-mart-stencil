@@ -35,9 +35,12 @@ export class Picker {
         this.handleEmojiClick = this.handleEmojiClick.bind(this)
         this.setPreviewRef = this.setPreviewRef.bind(this)
         this.handleSkinChange = this.handleSkinChange.bind(this)
+        this.forceUpdate = this.forceUpdate.bind(this)
     }
 
     @State() EMOJI_DATASOURCE_VERSION = "4.0.2";
+    @State() _forceUpdate: boolean;
+    @State() _loadedCategories = [];
 
     @Prop() recent: any;
     @Prop() include: any;
@@ -74,14 +77,17 @@ export class Picker {
     _preview;
     _categoryRefs: any = {};
     _scroll: any;
-    @State() _waitingForPaint: any;
+    _waitingForPaint: any;
     _scrollTop: any;
     _clientHeight: any;
     _scrollHeight: any;
     _search: any;
     _anchors: any;
-    t0 = null;
-    t1 = null;
+    _allCategoriesLoaded: boolean = false;
+    _firstCategoryIndex: number = 0;
+    _lastCategoryIndex: number = 3;
+    _loadOffset: number = 50;
+    _isLoading: boolean = false;
 
     @Method()
     clearSearch() {
@@ -90,11 +96,11 @@ export class Picker {
     }
 
     //TODO: Check if event exists in stencil 
-    componentWillReceiveProps(props) {
-        if (props.skin && !storeGet('skin')) {
-            this.skin = props.skin;
-        }
-    }
+    // componentWillReceiveProps(props) {
+    //     if (props.skin && !storeGet('skin')) {
+    //         this.skin = props.skin;
+    //     }
+    // }
 
     componentWillLoad() {
         let allCategories = [].concat(data.categories)
@@ -186,8 +192,8 @@ export class Picker {
         }
 
         this._categories.unshift(SEARCH_CATEGORY);
-        console.log('WILL LOAD DONE');
 
+        this.loadMore();
     }
 
     componentDidLoad() {
@@ -201,11 +207,22 @@ export class Picker {
         }
     }
 
-    // componentDidUpdate() {
-    //     //TODO: calling this causes infinte calls to memoize
-    //     this.updateCategoriesSize()
-    //     this.handleScroll()
-    // }
+    loadMore() {
+        this._isLoading = true;
+        this._loadedCategories = this._loadedCategories.concat(this.getCategories());
+        this._allCategoriesLoaded = this._loadedCategories.length === this._categories.length;
+
+        setTimeout(() => {
+            this.updateCategoriesSize();
+            this._isLoading = false;
+        }, 100);
+    }
+
+    componentDidUpdate() {
+        //TODO: calling this causes infinte calls to memoize
+        // this.updateCategoriesSize()
+        // this.handleScroll()
+    }
 
     componentDidUnload() {
         SEARCH_CATEGORY.emojis = null
@@ -329,8 +346,12 @@ export class Picker {
                 activeCategory = this._categories.filter(
                     category => !(category.anchor === false)
                 )[0]
-            } else if (scrollTop + this._clientHeight >= this._scrollHeight) {
+            } else if (scrollTop + this._clientHeight >= this._scrollHeight - this._loadOffset) {
                 activeCategory = this._categories[this._categories.length - 1]
+
+                if (!this._isLoading && !this._allCategoriesLoaded) {
+                    this.loadMore();
+                }
             }
         }
 
@@ -349,6 +370,7 @@ export class Picker {
     handleSearch(emojis) {
         SEARCH_CATEGORY.emojis = emojis
 
+        //TODO: Fix search...categories loaded later are not part of _categoryRefs
         for (let i = 0, l = this._categories.length; i < l; i++) {
             let component = this._categoryRefs[`category-${i}`]
 
@@ -360,7 +382,7 @@ export class Picker {
 
         this.forceUpdate()
 
-        if (this._scroll.scrollTop)
+        if (this._scroll && this._scroll.scrollTop)
             this._scroll.scrollTop = 0
 
         this.handleScroll()
@@ -368,7 +390,7 @@ export class Picker {
 
     forceUpdate() {
         //This is a way to force an update https://github.com/ionic-team/stencil/issues/185
-        this.i18n = { ...this.i18n };
+        this._forceUpdate = !this._forceUpdate;
     }
 
     handleAnchorClick(category, i) {
@@ -420,7 +442,12 @@ export class Picker {
     }
 
     getCategories() {
-        return this._categories
+        var categories = this._categories.slice(this._firstCategoryIndex, this._lastCategoryIndex);
+
+        this._firstCategoryIndex = this._lastCategoryIndex;
+        this._lastCategoryIndex = this._lastCategoryIndex + 1;
+
+        return categories;
     }
 
     setAnchorsRef(c) {
@@ -437,6 +464,8 @@ export class Picker {
 
     setScrollRef(c) {
         this._scroll = c
+        this._scrollHeight = this._scroll.scrollHeight
+        this._clientHeight = this._scroll.clientHeight
     }
 
     setCategoryRef(name, c) {
@@ -449,16 +478,10 @@ export class Picker {
 
     allEmojisLoaded(categoryIndex, emojisCount) {
         console.log(`Category at index ${categoryIndex} loaded ${emojisCount} emojis`);
-
-        if (categoryIndex === 9) {
-            console.log(`Call to render all categories took ${performance.now() - this.t0} milSec`);
-        }
     }
 
-    //TODO: something is causing a constant re-render
     render() {
         console.log('RE-RENDER');
-
 
         // TODO: calculating the width causes an infinite re-render 
         // width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
@@ -494,45 +517,39 @@ export class Picker {
                     class="emoji-mart-scroll"
                     onScroll={this.handleScroll}
                 >
-                    {this.getCategories().map((category, i) => {
-                        if (i === 0) {
-                            this.t0 = performance.now();
-                        }
-
-                        return (
-                            <emart-category
-                                ref={this.setCategoryRef.bind(this, `category-${i}`)}
-                                categoryKey={category.name}
-                                categoryId={category.id}
-                                name={category.name}
-                                emojis={category.emojis}
-                                perLine={this.perLine}
-                                native={this.native}
-                                allEmojisLoaded={(emojisCount) => this.allEmojisLoaded(i, emojisCount)}
-                                hasStickyPosition={this._hasStickyPosition}
-                                i18n={this._i18n}
-                                recent={category.id == RECENT_CATEGORY.id ? this.recent : undefined}
-                                custom={
-                                    category.id == RECENT_CATEGORY.id
-                                        ? CUSTOM_CATEGORY.emojis
-                                        : undefined
-                                }
-                                emojiProps={{
-                                    native: this.native,
-                                    skin: this.skin,
-                                    size: this.emojiSize,
-                                    set: this.set,
-                                    sheetSize: this.sheetSize,
-                                    forceSize: this.native,
-                                    tooltip: this.emojiTooltip,
-                                    backgroundImageFn: this.backgroundImageFn,
-                                    onOver: this.handleEmojiOver,
-                                    onLeave: this.handleEmojiLeave,
-                                    onClick: this.handleEmojiClick,
-                                }}
-                            />
-                        )
-                    })}
+                    {this._loadedCategories.map((category, i) =>
+                        (<emart-category
+                            ref={this.setCategoryRef.bind(this, `category-${i}`)}
+                            categoryKey={category.name}
+                            categoryId={category.id}
+                            name={category.name}
+                            emojis={category.emojis}
+                            perLine={this.perLine}
+                            native={this.native}
+                            allEmojisLoaded={(emojisCount) => this.allEmojisLoaded(i, emojisCount)}
+                            hasStickyPosition={this._hasStickyPosition}
+                            i18n={this._i18n}
+                            recent={category.id == RECENT_CATEGORY.id ? this.recent : undefined}
+                            custom={
+                                category.id == RECENT_CATEGORY.id
+                                    ? CUSTOM_CATEGORY.emojis
+                                    : undefined
+                            }
+                            emojiProps={{
+                                native: this.native,
+                                skin: this.skin,
+                                size: this.emojiSize,
+                                set: this.set,
+                                sheetSize: this.sheetSize,
+                                forceSize: this.native,
+                                tooltip: this.emojiTooltip,
+                                backgroundImageFn: this.backgroundImageFn,
+                                onOver: this.handleEmojiOver,
+                                onLeave: this.handleEmojiLeave,
+                                onClick: this.handleEmojiClick,
+                            }}
+                        />)
+                    )}
                 </div>
                 {
                     this.showPreview && (
