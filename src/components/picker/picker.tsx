@@ -476,9 +476,6 @@ export class Picker {
         this._clientHeight = this._scroll.clientHeight
     }
 
-    allEmojisLoaded(categoryIndex, emojisCount) {
-        // console.log(`Category at index ${categoryIndex} loaded ${emojisCount} emojis`);
-    }
 
     render() {
         console.log('RE-RENDER');
@@ -526,7 +523,6 @@ export class Picker {
                             emojis={category.emojis}
                             perLine={this.perLine}
                             native={this.native}
-                            allEmojisLoaded={(emojisCount) => this.allEmojisLoaded(i, emojisCount)}
                             hasStickyPosition={this._hasStickyPosition}
                             i18n={this._i18n}
                             recent={category.id == RECENT_CATEGORY.id ? this.recent : undefined}
