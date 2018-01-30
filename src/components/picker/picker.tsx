@@ -478,8 +478,6 @@ export class Picker {
 
 
     render() {
-        console.log('RE-RENDER');
-
         // TODO: calculating the width causes an infinite re-render 
         // width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
         // return (<p>Hello</p>)
