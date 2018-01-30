@@ -53,7 +53,7 @@ export class Search {
                 type="text"
                 onInput={this.handleInput}
                 placeholder={this.i18n.search}
-                autoFocus={this.autoFocus}
+                {...this.autoFocus && { 'autofocus': 'autofocus' }}
             />
         </div>
 }
