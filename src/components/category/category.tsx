@@ -24,7 +24,7 @@ export class Category {
     @Prop() recent: string[];
     @Prop() custom: any;
     @Prop() i18n: any = I18N;
-    @Prop() allEmojisLoaded: any = () => { };;
+    @Prop() categoryLoaded: any = () => { };;
 
     _parent: any;
     _container: any;
@@ -220,7 +220,7 @@ export class Category {
 
                 {emojis && emojis.map((emoji, index) => {
                     if (index === emojis.length - 1) {
-                        this.allEmojisLoaded(emojis.length);
+                        this.categoryLoaded(emojis.length);
                     }
 
                     return <emart-emoji emoji={emoji} {...emojiProps} ></emart-emoji>;

@@ -211,16 +211,25 @@ export class Picker {
 
     loadMore() {
         this._isLoading = true;
-        this._loadedCategories = this._loadedCategories.concat(this.getCategories());
+        //Initially load category 0-3...then load 1 category at a time
+        var newCategories = this._categories.slice(this._firstCategoryIndex, this._lastCategoryIndex);
+        this._firstCategoryIndex = this._lastCategoryIndex;
+        this._lastCategoryIndex = this._lastCategoryIndex + 1;
+        //Adding additional categories will automatically trigger a re-render 
+        this._loadedCategories = this._loadedCategories.concat(newCategories);
         this._allCategoriesLoaded = this._loadedCategories.length === this._categories.length;
+    }
 
-        setTimeout(() => {
+    categoryLoaded(categoryIndex: number, emojisCount: number) {
+        let lastRequestedCategoryIndex = this._firstCategoryIndex - 1;
+
+        if (categoryIndex === lastRequestedCategoryIndex) {
             //Update the categoryRefs(actual component references
             //every time you load more components)
             this._categoryRefs = this.getAllCategoryComponents();
             this.updateCategoriesSize();
             this._isLoading = false;
-        }, 200);
+        }
     }
 
     componentDidUpdate() {
@@ -449,15 +458,6 @@ export class Picker {
         }
     }
 
-    getCategories() {
-        var categories = this._categories.slice(this._firstCategoryIndex, this._lastCategoryIndex);
-
-        this._firstCategoryIndex = this._lastCategoryIndex;
-        this._lastCategoryIndex = this._lastCategoryIndex + 1;
-
-        return categories;
-    }
-
     setAnchorsRef(c) {
         this._anchors = c
     }
@@ -516,6 +516,7 @@ export class Picker {
                         (<emart-category
                             categoryKey={category.name}
                             categoryId={category.id}
+                            categoryLoaded={(emojisCount) => this.categoryLoaded(i, emojisCount)}
                             name={category.name}
                             emojis={category.emojis}
                             perLine={this.perLine}
