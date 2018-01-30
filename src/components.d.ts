@@ -65,6 +65,7 @@ declare global {
   }
   namespace JSXElements {
     export interface EmartCategoryAttributes extends HTMLAttributes {
+      allEmojisLoaded?: any;
       categoryId?: any;
       categoryKey?: any;
       custom?: any;
