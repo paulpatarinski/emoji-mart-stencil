@@ -220,7 +220,7 @@ export class Picker {
             this._categoryRefs = this.getAllCategoryComponents();
             this.updateCategoriesSize();
             this._isLoading = false;
-        }, 100);
+        }, 200);
     }
 
     componentDidUpdate() {
