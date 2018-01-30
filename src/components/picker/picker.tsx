@@ -1,4 +1,4 @@
-import { Component, Prop, State, Method } from '@stencil/core';
+import { Component, Prop, State, Method, Element } from '@stencil/core';
 import '../../lib/emoji-mart/vendor/raf-polyfill'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
 
@@ -37,6 +37,8 @@ export class Picker {
         this.handleSkinChange = this.handleSkinChange.bind(this)
         this.forceUpdate = this.forceUpdate.bind(this)
     }
+
+    @Element() host: HTMLElement
 
     @State() EMOJI_DATASOURCE_VERSION = "4.0.2";
     @State() _forceUpdate: boolean;
@@ -213,6 +215,9 @@ export class Picker {
         this._allCategoriesLoaded = this._loadedCategories.length === this._categories.length;
 
         setTimeout(() => {
+            //Update the categoryRefs(actual component references
+            //every time you load more components)
+            this._categoryRefs = this.getAllCategoryComponents();
             this.updateCategoriesSize();
             this._isLoading = false;
         }, 100);
@@ -367,12 +372,15 @@ export class Picker {
         this._scrollTop = scrollTop
     }
 
+    getAllCategoryComponents() {
+        return this.host.querySelectorAll('emart-category');
+    }
+
     handleSearch(emojis) {
         SEARCH_CATEGORY.emojis = emojis
 
-        //TODO: Fix search...categories loaded later are not part of _categoryRefs
-        for (let i = 0, l = this._categories.length; i < l; i++) {
-            let component = this._categoryRefs[`category-${i}`]
+        for (let i = 0, l = this._categoryRefs.length; i < l; i++) {
+            let component = this._categoryRefs[i] as any;
 
             if (component && component.name != 'Search') {
                 let display = emojis ? 'none' : 'inherit'
@@ -477,7 +485,7 @@ export class Picker {
     }
 
     allEmojisLoaded(categoryIndex, emojisCount) {
-        console.log(`Category at index ${categoryIndex} loaded ${emojisCount} emojis`);
+        // console.log(`Category at index ${categoryIndex} loaded ${emojisCount} emojis`);
     }
 
     render() {
@@ -519,7 +527,7 @@ export class Picker {
                 >
                     {this._loadedCategories.map((category, i) =>
                         (<emart-category
-                            ref={this.setCategoryRef.bind(this, `category-${i}`)}
+                            categoryIndex={i}
                             categoryKey={category.name}
                             categoryId={category.id}
                             name={category.name}
