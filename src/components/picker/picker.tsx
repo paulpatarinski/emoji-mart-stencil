@@ -476,14 +476,6 @@ export class Picker {
         this._clientHeight = this._scroll.clientHeight
     }
 
-    setCategoryRef(name, c) {
-        if (!this._categoryRefs) {
-            this._categoryRefs = {}
-        }
-
-        this._categoryRefs[name] = c
-    }
-
     allEmojisLoaded(categoryIndex, emojisCount) {
         // console.log(`Category at index ${categoryIndex} loaded ${emojisCount} emojis`);
     }
