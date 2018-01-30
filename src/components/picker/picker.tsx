@@ -74,7 +74,7 @@ export class Picker {
     _preview;
     _categoryRefs: any = {};
     _scroll: any;
-    _waitingForPaint: any;
+    @State() _waitingForPaint: any;
     _scrollTop: any;
     _clientHeight: any;
     _scrollHeight: any;
