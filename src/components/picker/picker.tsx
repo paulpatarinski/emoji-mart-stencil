@@ -514,7 +514,6 @@ export class Picker {
                 >
                     {this._loadedCategories.map((category, i) =>
                         (<emart-category
-                            categoryIndex={i}
                             categoryKey={category.name}
                             categoryId={category.id}
                             name={category.name}
@@ -542,6 +541,7 @@ export class Picker {
                                 onLeave: this.handleEmojiLeave,
                                 onClick: this.handleEmojiClick,
                             }}
+                            {...{ 'categoryIndex': i }}
                         />)
                     )}
                 </div>
