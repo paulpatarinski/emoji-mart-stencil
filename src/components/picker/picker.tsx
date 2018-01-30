@@ -80,6 +80,8 @@ export class Picker {
     _scrollHeight: any;
     _search: any;
     _anchors: any;
+    t0 = null;
+    t1 = null;
 
     @Method()
     clearSearch() {
@@ -445,9 +447,19 @@ export class Picker {
         this._categoryRefs[name] = c
     }
 
+    allEmojisLoaded(categoryIndex, emojisCount) {
+        console.log(`Category at index ${categoryIndex} loaded ${emojisCount} emojis`);
+
+        if (categoryIndex === 9) {
+            console.log(`Call to render all categories took ${performance.now() - this.t0} milSec`);
+        }
+    }
+
     //TODO: something is causing a constant re-render
     render() {
         console.log('RE-RENDER');
+
+
         // TODO: calculating the width causes an infinite re-render 
         // width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
         // return (<p>Hello</p>)
@@ -483,6 +495,10 @@ export class Picker {
                     onScroll={this.handleScroll}
                 >
                     {this.getCategories().map((category, i) => {
+                        if (i === 0) {
+                            this.t0 = performance.now();
+                        }
+
                         return (
                             <emart-category
                                 ref={this.setCategoryRef.bind(this, `category-${i}`)}
@@ -492,6 +508,7 @@ export class Picker {
                                 emojis={category.emojis}
                                 perLine={this.perLine}
                                 native={this.native}
+                                allEmojisLoaded={(emojisCount) => this.allEmojisLoaded(i, emojisCount)}
                                 hasStickyPosition={this._hasStickyPosition}
                                 i18n={this._i18n}
                                 recent={category.id == RECENT_CATEGORY.id ? this.recent : undefined}
