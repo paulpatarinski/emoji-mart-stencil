@@ -221,6 +221,8 @@ export class Picker {
     }
 
     categoryLoaded(categoryIndex: number, emojisCount: number) {
+        console.log(`Category ${categoryIndex} loaded...${emojisCount} emojis`);
+
         let lastRequestedCategoryIndex = this._firstCategoryIndex - 1;
 
         if (categoryIndex === lastRequestedCategoryIndex) {
