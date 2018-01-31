@@ -7,8 +7,8 @@ import { getData, unifiedToNative, getSanitizedData } from '../../lib/emoji-mart
 })
 
 export class Emoji {
-    @State() EMOJI_DATASOURCE_VERSION = "4.0.2";
-    @State() SHEET_COLUMNS = 52;
+    EMOJI_DATASOURCE_VERSION = "4.0.2";
+    SHEET_COLUMNS = 52;
 
     // @Prop() children: any;
     @Prop() skin: any = 1;
