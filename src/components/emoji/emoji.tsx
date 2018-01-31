@@ -20,6 +20,7 @@ export class Emoji {
     @Prop() backgroundImageFn: any = (set, sheetSize) =>
         `https://unpkg.com/emoji-datasource-${set}@${this.EMOJI_DATASOURCE_VERSION}/img/${set}/sheets-256/${sheetSize}.png`;
 
+    @Prop() onLoaded: any = () => { };
     @Prop() onClick: any;
     @Prop() onOver: any;
     @Prop() onLeave: any;
@@ -27,6 +28,11 @@ export class Emoji {
     @Prop() fallback: any;
     @Prop() html: any;
     @Prop() emoji: any;
+
+    componentDidLoad() {
+        this._detectImgLoaded(this.backgroundImageFn(this.set,
+            this.sheetSize));
+    }
 
     _getPosition = props => {
         var { sheet_x, sheet_y } = this._getData(props),
@@ -93,6 +99,14 @@ export class Emoji {
         }
 
         return div.getAttribute('style')
+    }
+
+    _detectImgLoaded = imgSrc => {
+        var image = new Image();
+        image.src = imgSrc;
+        image.onload = () => {
+            this.onLoaded();
+        }
     }
 
     render() {
