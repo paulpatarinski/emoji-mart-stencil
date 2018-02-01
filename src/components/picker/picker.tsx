@@ -97,6 +97,12 @@ export class Picker {
         this._search.clear();
     }
 
+    @Method()
+    resetScroll() {
+        if (this._scroll && this._scroll.scrollTop)
+            this._scroll.scrollTop = 0
+    }
+
     //TODO: Check if event exists in stencil 
     // componentWillReceiveProps(props) {
     //     if (props.skin && !storeGet('skin')) {
@@ -401,8 +407,7 @@ export class Picker {
 
         this.forceUpdate()
 
-        if (this._scroll && this._scroll.scrollTop)
-            this._scroll.scrollTop = 0
+        this.resetScroll();
 
         this.handleScroll()
     }
