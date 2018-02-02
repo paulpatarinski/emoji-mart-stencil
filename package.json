@@ -10,8 +10,7 @@
   ],
   "browser": "dist/emoji-mart.js",
   "scripts": {
-    "copy:static": "cpy src/lib/emoji-mart/vendor/**/* dist/collection/lib/emoji-mart/vendor && cpy src/lib/emoji-mart/svgs/**/* dist/collection/lib/emoji-mart/svgs",
-    "build": "npm run delete:dist && npm run copy:static && stencil build",
+    "build": "npm run delete:dist && stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
     "serve": "stencil-dev-server",
     "start": "npm run dev",
@@ -26,7 +25,6 @@
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.1",
-    "cpy-cli": "^1.0.1",
     "jest": "^21.2.1",
     "rimraf": "^2.6.2"
   },
