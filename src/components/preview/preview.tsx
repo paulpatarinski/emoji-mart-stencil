@@ -1,5 +1,4 @@
 import { Method, Component, Prop, State } from '@stencil/core';
-import Emoji from '../emoji/emoji'
 import { getData } from '../../lib/emoji-mart/utils/index';
 import { EmojiProps } from '../emoji/emojiProps';
 
