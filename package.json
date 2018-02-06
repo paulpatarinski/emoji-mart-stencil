@@ -10,10 +10,11 @@
   ],
   "browser": "dist/emoji-mart.js",
   "scripts": {
-    "build": "npm run delete:dist && stencil build",
+    "copy:static": "copyfiles src/lib/emoji-mart/**/* dist/collection/lib -u 2",
+    "build": "npm run delete:dist && npm run copy:static && stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
     "serve": "stencil-dev-server",
-    "start": "npm run dev",
+    "start": "rimraf www && npm run copy:static && npm run dev --es5",
     "delete:dist": "rimraf dist",
     "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache"
@@ -25,6 +26,7 @@
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.1",
+    "copyfiles": "^1.2.0",
     "jest": "^21.2.1",
     "rimraf": "^2.6.2"
   },
