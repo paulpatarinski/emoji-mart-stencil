@@ -6,7 +6,7 @@ import data from '../../lib/emoji-mart/data/index'
 @Component({
     tag: 'emart-anchors'
 })  
-
+ 
 export class Anchors {
     constructor() {
         this._defaultCategory = this.categories.filter(category => category.first)[0];
