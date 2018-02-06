@@ -1,5 +1,5 @@
-import { Method, Component, Prop, State } from '@stencil/core';
-import { get as freqGet } from '../../lib/emoji-mart/utils/frequently'
+import { Method, Component, Prop } from '@stencil/core';
+import frequently from '../../lib/emoji-mart/utils/frequently'
 import { getData } from '../../lib/emoji-mart/utils'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
 
@@ -15,7 +15,7 @@ export class Category {
 
     @Prop() categoryId: any;
     @Prop() categoryKey: any;
-    @Prop() emojis: any = [];
+    @Prop() emojis: any = []; 
     @Prop() hasStickyPosition: boolean = true;
     @Prop() name: string;
     @Prop() native: boolean;
@@ -44,11 +44,11 @@ export class Category {
 
         this._margin = 0
         this._minMargin = 0
-
-        this.memoizeSize()
+ 
+        // this.memoizeSize()
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps) {
         var {
         name,
             perLine,
@@ -125,7 +125,7 @@ export class Category {
 
         if (this.name == 'Recent') {
             let { custom } = this
-            let frequentlyUsed = this.recent || freqGet(this.perLine)
+            let frequentlyUsed = this.recent || frequently.get(this.perLine)
 
             if (frequentlyUsed.length) {
                 emojis = frequentlyUsed

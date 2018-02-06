@@ -1,18 +1,18 @@
 import { Component, Prop, State, Method, Element } from '@stencil/core';
 import '../../lib/emoji-mart/vendor/raf-polyfill'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
-
-import data from '../../lib/emoji-mart/data'
-
-import { get as storeGet, update as storeUpdate } from '../../lib/emoji-mart/utils/store'
-import { add as frequentlyAdd } from '../../lib/emoji-mart/utils/frequently'
-import { deepMerge, measureScrollbar } from '../../lib/emoji-mart/utils'
-
+ 
+import data from '../../lib/emoji-mart/data/index' 
+ 
+import store from '../../lib/emoji-mart/utils/store'
+import frequently from '../../lib/emoji-mart/utils/frequently'
+import {deepMerge} from '../../lib/emoji-mart/utils'
+ 
 const RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
 const SEARCH_CATEGORY = {
     id: 'search',
-    name: 'Search',
-    emojis: null,
+    name: 'Search', 
+    emojis: null, 
     anchor: false,
 }
 const CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', emojis: [] }
@@ -56,7 +56,7 @@ export class Picker {
     @Prop() emoji: string = 'department_store';
     @Prop() color: string = '#ae65c5';
     @Prop() set: string = 'apple';
-    @Prop() skin: any = storeGet('skin') || this.skin;
+    @Prop() skin: any = store.get('skin') || this.skin;
     @Prop() native: any = false;
     @Prop() sheetSize: any = 64;
     @Prop() backgroundImageFn: any = (set, sheetSize) =>
@@ -284,7 +284,7 @@ export class Picker {
         clearTimeout(this._leaveTimeout)
     }
 
-    handleEmojiLeave(emoji) {
+    handleEmojiLeave() {
         var { _preview } = this;
 
         if (!_preview) {
@@ -298,7 +298,7 @@ export class Picker {
 
     handleEmojiClick(emoji, e) {
         this.onEmojiClicked(emoji, e)
-        if (!this._hideRecent && !this.recent) frequentlyAdd(emoji)
+        if (!this._hideRecent && !this.recent) frequently.add(emoji)
 
         var component = this._categoryRefs['category-1']
         if (component) {
@@ -419,7 +419,7 @@ export class Picker {
 
     handleAnchorClick(category, i) {
         var component = this._categoryRefs[`category-${i}`],
-            { _scroll, _anchors } = this,
+            { _scroll } = this,
             scrollToComponent = null
 
         scrollToComponent = () => {
@@ -449,8 +449,8 @@ export class Picker {
 
         this.skin = skin;
 
-        storeUpdate(newState)
-    }
+        store.update(newState)
+    } 
 
     updateCategoriesSize() {
         for (let i = 0, l = this._categories.length; i < l; i++) {

@@ -1,11 +1,11 @@
 import { Component, Prop, State } from '@stencil/core';
-import SVGs from '../../lib/emoji-mart/svgs'
+import SVGs from '../../lib/emoji-mart/svgs/index'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
-import data from '../../lib/emoji-mart/data'
-
+import data from '../../lib/emoji-mart/data/index' 
+ 
 @Component({
     tag: 'emart-anchors'
-})
+})  
 
 export class Anchors {
     constructor() {
