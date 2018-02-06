@@ -1,5 +1,5 @@
 import buildSearch from './build-search'
-import data from '../data'
+import data from '../data/index'
 import stringFromCodePoint from '../polyfills/stringFromCodePoint'
 
 const _JSON = JSON
@@ -17,13 +17,13 @@ function unifiedToNative(unified) {
 function sanitize(emoji) {
   var {
       name,
-    short_names,
-    skin_tone,
-    skin_variations,
-    emoticons,
-    unified,
-    custom,
-    imageUrl,
+      short_names,
+      skin_tone,
+      skin_variations,
+      emoticons,
+      unified,
+      custom,
+      imageUrl,
     } = emoji,
     id = emoji.id || short_names[0],
     colons = `:${id}:`
@@ -54,12 +54,12 @@ function sanitize(emoji) {
   }
 }
 
-function getSanitizedData(emoji: any, skin?: any, set?: any) {
-  return sanitize(getData(emoji, skin, set))
+function getSanitizedData() {
+  return sanitize(getData(...arguments))
 }
 
-function getData(emoji: any, skin?: any, set?: any) {
-  var emojiData: any = {}
+function getData(emoji, skin, set) {
+  var emojiData = {}
 
   if (typeof emoji == 'string') {
     let matches = emoji.match(COLONS_REGEX)
