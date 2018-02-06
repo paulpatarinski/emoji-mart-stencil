@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 import { getData, unifiedToNative, getSanitizedData } from 'emoji-mart/dist-es/utils';
 
 @Component({
@@ -116,7 +116,6 @@ export class Emoji {
             return null
         }
 
-        //TODO : enabled the passing of children
         let style: any = {};
         let { unified, custom, short_names, imageUrl } = data,
             children = '',
