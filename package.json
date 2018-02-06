@@ -16,7 +16,8 @@
     "start": "npm run dev",
     "delete:dist": "rimraf dist",
     "test": "jest --no-cache",
-    "test.watch": "jest --watch --no-cache"
+    "test.watch": "jest --watch --no-cache",
+    "pull:master": "git pull origin master"
   },
   "dependencies": {
     "@stencil/core": "0.1.1-0"
