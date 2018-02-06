@@ -3,7 +3,7 @@ import { getData, unifiedToNative, getSanitizedData } from 'emoji-mart/dist-es/u
 
 @Component({
     tag: 'emart-emoji',
-    styleUrl: '../../lib/emoji-mart/emoji-mart.scss' 
+    styleUrl: '../../../node_modules/emoji-mart/css/emoji-mart.css' 
 })
 
 export class Emoji {
