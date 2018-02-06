@@ -19,7 +19,7 @@
     "test.watch": "jest --watch --no-cache"
   },
   "dependencies": {
-    "@stencil/core": "next",
+    "@stencil/core": "latest",
     "emoji-mart": "^2.4.2"
   },
   "devDependencies": {
