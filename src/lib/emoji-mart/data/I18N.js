@@ -1,3 +1,4 @@
+//Separated smileys & people for better infinite scroll performance
 export const I18N = {
     search: 'Search',
     notfound: 'No Emoji Found',
