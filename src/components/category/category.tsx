@@ -1,6 +1,6 @@
 import { Method, Component, Prop } from '@stencil/core';
-import frequently from '../../lib/emoji-mart/utils/frequently'
-import { getData } from '../../lib/emoji-mart/utils'
+import frequently from 'emoji-mart/dist-es/utils/frequently'
+import { getData } from 'emoji-mart/dist-es/utils'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
 
 @Component({

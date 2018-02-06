@@ -1,16 +1,16 @@
 import { Component, Prop, State } from '@stencil/core';
-import { getData, unifiedToNative, getSanitizedData } from '../../lib/emoji-mart/utils';
+import { getData, unifiedToNative, getSanitizedData } from 'emoji-mart/dist-es/utils';
 
 @Component({
     tag: 'emart-emoji',
-    styleUrl: '../../lib/emoji-mart/emoji-mart.scss'
+    styleUrl: '../../lib/emoji-mart/emoji-mart.scss' 
 })
 
 export class Emoji {
     EMOJI_DATASOURCE_VERSION = "4.0.2";
     SHEET_COLUMNS = 52;
 
-    // @Prop() children: any;
+    // @Prop() children: any; 
     @Prop() skin: any = 1;
     @Prop() set: any = 'apple';
     @Prop() sheetSize: any = 64;

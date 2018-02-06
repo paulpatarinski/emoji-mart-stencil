@@ -1,4 +1,4 @@
-import buildSearch from '../utils/build-search'
+import buildSearch from 'emoji-mart/dist-es/utils/build-search'
 import data from './data'
 
 function uncompress(list) {

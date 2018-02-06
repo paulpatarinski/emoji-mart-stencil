@@ -2,11 +2,11 @@ import { Component, Prop, State, Method, Element } from '@stencil/core';
 import '../../lib/emoji-mart/vendor/raf-polyfill'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
  
-import data from '../../lib/emoji-mart/data/index' 
+import data from 'emoji-mart/dist-es/data/index' 
  
-import store from '../../lib/emoji-mart/utils/store'
-import frequently from '../../lib/emoji-mart/utils/frequently'
-import {deepMerge} from '../../lib/emoji-mart/utils'
+import store from 'emoji-mart/dist-es/utils/store'
+import frequently from 'emoji-mart/dist-es/utils/frequently'
+import {deepMerge} from 'emoji-mart/dist-es/utils'
  
 const RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
 const SEARCH_CATEGORY = {
