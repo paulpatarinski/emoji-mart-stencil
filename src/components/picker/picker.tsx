@@ -2,7 +2,7 @@ import { Component, Prop, State, Method, Element } from '@stencil/core';
 import 'emoji-mart/dist-es/vendor/raf-polyfill'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
  
-import data from 'emoji-mart/dist-es/data/index' 
+import data from '../../lib/emoji-mart/data/index' 
  
 import store from 'emoji-mart/dist-es/utils/store'
 import frequently from 'emoji-mart/dist-es/utils/frequently'
