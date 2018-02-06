@@ -177,16 +177,16 @@ export class Category {
         this._label = c
     }
 
-    emojiLoaded(index) {
-        //Special case for recent
-        if (!this.emojis) {
+    emojiLoaded(allEmojis, loadedEmojiIndex) {
+        //Special case...should never occur
+        if (!allEmojis) {
             this.categoryLoaded(0);
             return;
         }
 
         //Last emoji was loaded
-        if (index === this.emojis.length - 1) {
-            this.categoryLoaded(this.emojis.length);
+        if (loadedEmojiIndex === allEmojis.length - 1) {
+            this.categoryLoaded(allEmojis.length);
             return;
         }
     }
@@ -232,7 +232,7 @@ export class Category {
                     </span>
                 </div>
 
-                {emojis && emojis.map((emoji, index) => (<emart-emoji emoji={emoji} onLoaded={this.emojiLoaded.bind(this, index)} {...emojiProps} ></emart-emoji>))}
+                {emojis && emojis.map((emoji, index) => (<emart-emoji emoji={emoji} onLoaded={this.emojiLoaded.bind(this, emojis, index)} {...emojiProps} ></emart-emoji>))}
 
                 {emojis &&
                     !emojis.length && (
