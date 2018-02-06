@@ -1,11 +1,11 @@
 import { Method, Component, Prop, State } from '@stencil/core';
-import { getData } from '../../lib/emoji-mart/utils/index';
+import { getData } from 'emoji-mart/dist-es/utils/index';
 import { EmojiProps } from '../emoji/emojiProps';
 
-@Component({
+@Component({ 
   tag: 'emart-preview'
 })
-
+ 
 export class Preview {
   constructor() {
     this.emoji = null;

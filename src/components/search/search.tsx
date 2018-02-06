@@ -1,5 +1,5 @@
 import { Method, Component, Prop, State } from '@stencil/core';
-import emojiIndex from '../../lib/emoji-mart/utils/emoji-index'
+import emojiIndex from 'emoji-mart/dist-es/utils/emoji-index'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
 
 @Component({
