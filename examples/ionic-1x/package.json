@@ -9,6 +9,7 @@
     "gulp-sass": "^3.1.0"
   },
   "scripts": {
-    "start": "ionic serve"
+    "start": "ionic serve",
+    "deploy" : "ionic cordova run ios"
   }
 }
