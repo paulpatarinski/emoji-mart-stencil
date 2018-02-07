@@ -1,0 +1,34 @@
+export declare class Category {
+    constructor();
+    categoryId: any;
+    categoryKey: any;
+    emojis: any;
+    hasStickyPosition: boolean;
+    name: string;
+    native: boolean;
+    perLine: number;
+    emojiProps: any;
+    recent: string[];
+    custom: any;
+    i18n: any;
+    categoryLoaded: any;
+    _parent: any;
+    _container: any;
+    _margin: any;
+    _minMargin: any;
+    _label: any;
+    _maxMargin: any;
+    _top: number;
+    getTop(): number;
+    componentDidLoad(): void;
+    shouldComponentUpdate(nextProps: any): boolean;
+    memoizeSize(): void;
+    handleScroll(scrollTop: any): boolean;
+    getEmojis(): any;
+    updateDisplay(display: any): void;
+    forceUpdate(): void;
+    setContainerRef(c: any): void;
+    setLabelRef(c: any): void;
+    emojiLoaded(allEmojis: any, loadedEmojiIndex: any): void;
+    render(): JSX.Element;
+}

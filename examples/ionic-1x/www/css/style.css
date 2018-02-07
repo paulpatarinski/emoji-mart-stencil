@@ -1,1 +1,8 @@
 /* Empty. Add your own CSS if you like */
+.picker .emoji-mart {
+    height: 100%;
+}
+
+.picker .emoji-mart-scroll {
+    height: 500px;
+}

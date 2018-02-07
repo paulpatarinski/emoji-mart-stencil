@@ -1,0 +1,30 @@
+export declare class Emoji {
+    EMOJI_DATASOURCE_VERSION: string;
+    SHEET_COLUMNS: number;
+    skin: any;
+    set: any;
+    sheetSize: any;
+    native: any;
+    forceSize: any;
+    tooltip: any;
+    backgroundImageFn: any;
+    onLoaded: any;
+    onClick: any;
+    onOver: any;
+    onLeave: any;
+    size: number;
+    fallback: any;
+    html: any;
+    emoji: any;
+    componentDidLoad(): void;
+    _getPosition: (props: any) => string;
+    _getData: (props: any) => any;
+    _getSanitizedData: (props: any) => any;
+    _handleClick: (e: any, props: any) => void;
+    _handleOver: (e: any, props: any) => void;
+    _handleLeave: (e: any, props: any) => void;
+    _isNumeric: (value: any) => boolean;
+    _convertStyleToCSS: (style: any) => string;
+    _detectImgLoaded: (imgSrc: any) => void;
+    render(): JSX.Element;
+}
