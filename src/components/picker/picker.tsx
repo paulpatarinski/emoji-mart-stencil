@@ -94,7 +94,9 @@ export class Picker {
     @Method()
     clearSearch() {
         this.handleSearch(null);
-        this._search.clear();
+        
+        if(this._search)
+            this._search.clear();
     }
 
     @Method()
@@ -478,9 +480,11 @@ export class Picker {
     }
 
     setScrollRef(c) {
-        this._scroll = c
-        this._scrollHeight = this._scroll.scrollHeight
-        this._clientHeight = this._scroll.clientHeight
+        if(c) {
+            this._scroll = c
+            this._scrollHeight = this._scroll.scrollHeight
+            this._clientHeight = this._scroll.clientHeight
+        }
     }
 
 
