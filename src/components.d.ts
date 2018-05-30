@@ -4,248 +4,356 @@
  * and imports for stencil collections that might be configured in your stencil.config.js file
  */
 
+import '@stencil/core';
+
+declare global {
+  namespace JSX {
+    interface Element {}
+    export interface IntrinsicElements {}
+  }
+  namespace JSXElements {}
+
+  interface HTMLStencilElement extends HTMLElement {
+    componentOnReady(): Promise<this>;
+    componentOnReady(done: (ele?: this) => void): void;
+
+    forceUpdate(): void;
+  }
+
+  interface HTMLAttributes {}
+}
+
 import {
   EmojiProps,
 } from './components/emoji/emojiProps';
 
-import {
-  Anchors as EmartAnchors
-} from './components/anchors/anchors';
-
 declare global {
-  interface HTMLEmartAnchorsElement extends EmartAnchors, HTMLElement {
+
+  namespace StencilComponents {
+    interface EmartAnchors {
+      'categories': any[];
+      'color': any;
+      'i18n': any;
+      'onAnchorClick': any;
+    }
   }
+
+  interface HTMLEmartAnchorsElement extends StencilComponents.EmartAnchors, HTMLStencilElement {}
+
   var HTMLEmartAnchorsElement: {
     prototype: HTMLEmartAnchorsElement;
     new (): HTMLEmartAnchorsElement;
   };
   interface HTMLElementTagNameMap {
-    "emart-anchors": HTMLEmartAnchorsElement;
+    'emart-anchors': HTMLEmartAnchorsElement;
   }
   interface ElementTagNameMap {
-    "emart-anchors": HTMLEmartAnchorsElement;
+    'emart-anchors': HTMLEmartAnchorsElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "emart-anchors": JSXElements.EmartAnchorsAttributes;
+      'emart-anchors': JSXElements.EmartAnchorsAttributes;
     }
   }
   namespace JSXElements {
     export interface EmartAnchorsAttributes extends HTMLAttributes {
-      categories?: any[];
-      color?: any;
-      i18n?: any;
-      onAnchorClick?: any;
+      'categories'?: any[];
+      'color'?: any;
+      'i18n'?: any;
+      'onAnchorClick'?: any;
     }
   }
 }
 
 
-import {
-  Category as EmartCategory
-} from './components/category/category';
-
 declare global {
-  interface HTMLEmartCategoryElement extends EmartCategory, HTMLElement {
+
+  namespace StencilComponents {
+    interface EmartCategory {
+      'categoryId': any;
+      'categoryKey': any;
+      'categoryLoaded': any;
+      'custom': any;
+      'emojiProps': any;
+      'emojis': any;
+      'forceUpdate': () => void;
+      'getTop': () => number;
+      'handleScroll': (scrollTop: any) => boolean;
+      'hasStickyPosition': boolean;
+      'i18n': any;
+      'memoizeSize': () => void;
+      'name': string;
+      'native': boolean;
+      'perLine': number;
+      'recent': string[];
+      'updateDisplay': (display: any) => void;
+    }
   }
+
+  interface HTMLEmartCategoryElement extends StencilComponents.EmartCategory, HTMLStencilElement {}
+
   var HTMLEmartCategoryElement: {
     prototype: HTMLEmartCategoryElement;
     new (): HTMLEmartCategoryElement;
   };
   interface HTMLElementTagNameMap {
-    "emart-category": HTMLEmartCategoryElement;
+    'emart-category': HTMLEmartCategoryElement;
   }
   interface ElementTagNameMap {
-    "emart-category": HTMLEmartCategoryElement;
+    'emart-category': HTMLEmartCategoryElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "emart-category": JSXElements.EmartCategoryAttributes;
+      'emart-category': JSXElements.EmartCategoryAttributes;
     }
   }
   namespace JSXElements {
     export interface EmartCategoryAttributes extends HTMLAttributes {
-      categoryId?: any;
-      categoryKey?: any;
-      categoryLoaded?: any;
-      custom?: any;
-      emojiProps?: any;
-      emojis?: any;
-      hasStickyPosition?: boolean;
-      i18n?: any;
-      name?: string;
-      native?: boolean;
-      perLine?: number;
-      recent?: string[];
+      'categoryId'?: any;
+      'categoryKey'?: any;
+      'categoryLoaded'?: any;
+      'custom'?: any;
+      'emojiProps'?: any;
+      'emojis'?: any;
+      'hasStickyPosition'?: boolean;
+      'i18n'?: any;
+      'name'?: string;
+      'native'?: boolean;
+      'perLine'?: number;
+      'recent'?: string[];
     }
   }
 }
 
 
-import {
-  Emoji as EmartEmoji
-} from './components/emoji/emoji';
-
 declare global {
-  interface HTMLEmartEmojiElement extends EmartEmoji, HTMLElement {
+
+  namespace StencilComponents {
+    interface EmartEmoji {
+      'backgroundImageFn': any;
+      'emoji': any;
+      'fallback': any;
+      'forceSize': any;
+      'html': any;
+      'native': any;
+      'onClick': any;
+      'onLeave': any;
+      'onLoaded': any;
+      'onOver': any;
+      'set': any;
+      'sheetSize': any;
+      'size': number;
+      'skin': any;
+      'tooltip': any;
+    }
   }
+
+  interface HTMLEmartEmojiElement extends StencilComponents.EmartEmoji, HTMLStencilElement {}
+
   var HTMLEmartEmojiElement: {
     prototype: HTMLEmartEmojiElement;
     new (): HTMLEmartEmojiElement;
   };
   interface HTMLElementTagNameMap {
-    "emart-emoji": HTMLEmartEmojiElement;
+    'emart-emoji': HTMLEmartEmojiElement;
   }
   interface ElementTagNameMap {
-    "emart-emoji": HTMLEmartEmojiElement;
+    'emart-emoji': HTMLEmartEmojiElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "emart-emoji": JSXElements.EmartEmojiAttributes;
+      'emart-emoji': JSXElements.EmartEmojiAttributes;
     }
   }
   namespace JSXElements {
     export interface EmartEmojiAttributes extends HTMLAttributes {
-      backgroundImageFn?: any;
-      emoji?: any;
-      fallback?: any;
-      forceSize?: any;
-      html?: any;
-      native?: any;
-      onClick?: any;
-      onLeave?: any;
-      onLoaded?: any;
-      onOver?: any;
-      set?: any;
-      sheetSize?: any;
-      size?: number;
-      skin?: any;
-      tooltip?: any;
+      'backgroundImageFn'?: any;
+      'emoji'?: any;
+      'fallback'?: any;
+      'forceSize'?: any;
+      'html'?: any;
+      'native'?: any;
+      'onClick'?: any;
+      'onLeave'?: any;
+      'onLoaded'?: any;
+      'onOver'?: any;
+      'set'?: any;
+      'sheetSize'?: any;
+      'size'?: number;
+      'skin'?: any;
+      'tooltip'?: any;
     }
   }
 }
 
 
-import {
-  Picker as EmartPicker
-} from './components/picker/picker';
-
 declare global {
-  interface HTMLEmartPickerElement extends EmartPicker, HTMLElement {
+
+  namespace StencilComponents {
+    interface EmartPicker {
+      'autoFocus': boolean;
+      'backgroundImageFn': any;
+      'clearSearch': () => void;
+      'color': string;
+      'custom': any;
+      'emoji': string;
+      'emojiSize': number;
+      'emojiTooltip': any;
+      'emojisToShowFilter': any;
+      'exclude': any;
+      'i18n': any;
+      'include': any;
+      'native': any;
+      'onEmojiClicked': any;
+      'perLine': number;
+      'pickerStyle': any;
+      'recent': any;
+      'resetScroll': () => void;
+      'set': string;
+      'sheetSize': any;
+      'showAnchors': boolean;
+      'showPreview': boolean;
+      'skin': any;
+      'title': string;
+      'width': string;
+    }
   }
+
+  interface HTMLEmartPickerElement extends StencilComponents.EmartPicker, HTMLStencilElement {}
+
   var HTMLEmartPickerElement: {
     prototype: HTMLEmartPickerElement;
     new (): HTMLEmartPickerElement;
   };
   interface HTMLElementTagNameMap {
-    "emart-picker": HTMLEmartPickerElement;
+    'emart-picker': HTMLEmartPickerElement;
   }
   interface ElementTagNameMap {
-    "emart-picker": HTMLEmartPickerElement;
+    'emart-picker': HTMLEmartPickerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "emart-picker": JSXElements.EmartPickerAttributes;
+      'emart-picker': JSXElements.EmartPickerAttributes;
     }
   }
   namespace JSXElements {
     export interface EmartPickerAttributes extends HTMLAttributes {
-      autoFocus?: boolean;
-      backgroundImageFn?: any;
-      color?: string;
-      custom?: any;
-      emoji?: string;
-      emojiSize?: number;
-      emojisToShowFilter?: any;
-      emojiTooltip?: any;
-      exclude?: any;
-      i18n?: any;
-      include?: any;
-      native?: any;
-      onEmojiClicked?: any;
-      perLine?: number;
-      pickerStyle?: any;
-      recent?: any;
-      set?: string;
-      sheetSize?: any;
-      showAnchors?: boolean;
-      showPreview?: boolean;
-      skin?: any;
-      title?: string;
-      width?: string;
+      'autoFocus'?: boolean;
+      'backgroundImageFn'?: any;
+      'color'?: string;
+      'custom'?: any;
+      'emoji'?: string;
+      'emojiSize'?: number;
+      'emojiTooltip'?: any;
+      'emojisToShowFilter'?: any;
+      'exclude'?: any;
+      'i18n'?: any;
+      'include'?: any;
+      'native'?: any;
+      'onEmojiClicked'?: any;
+      'perLine'?: number;
+      'pickerStyle'?: any;
+      'recent'?: any;
+      'set'?: string;
+      'sheetSize'?: any;
+      'showAnchors'?: boolean;
+      'showPreview'?: boolean;
+      'skin'?: any;
+      'title'?: string;
+      'width'?: string;
     }
   }
 }
 
 
-import {
-  Preview as EmartPreview
-} from './components/preview/preview';
-
 declare global {
-  interface HTMLEmartPreviewElement extends EmartPreview, HTMLElement {
+
+  namespace StencilComponents {
+    interface EmartPreview {
+      'emoji': any;
+      'emojiProps': EmojiProps;
+      'idleEmoji': string;
+      'skinsProps': object;
+      'title': string;
+    }
   }
+
+  interface HTMLEmartPreviewElement extends StencilComponents.EmartPreview, HTMLStencilElement {}
+
   var HTMLEmartPreviewElement: {
     prototype: HTMLEmartPreviewElement;
     new (): HTMLEmartPreviewElement;
   };
   interface HTMLElementTagNameMap {
-    "emart-preview": HTMLEmartPreviewElement;
+    'emart-preview': HTMLEmartPreviewElement;
   }
   interface ElementTagNameMap {
-    "emart-preview": HTMLEmartPreviewElement;
+    'emart-preview': HTMLEmartPreviewElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "emart-preview": JSXElements.EmartPreviewAttributes;
+      'emart-preview': JSXElements.EmartPreviewAttributes;
     }
   }
   namespace JSXElements {
     export interface EmartPreviewAttributes extends HTMLAttributes {
-      emoji?: any;
-      emojiProps?: EmojiProps;
-      idleEmoji?: string;
-      skinsProps?: object;
-      title?: string;
+      'emoji'?: any;
+      'emojiProps'?: EmojiProps;
+      'idleEmoji'?: string;
+      'skinsProps'?: object;
+      'title'?: string;
     }
   }
 }
 
 
-import {
-  Search as EmartSearch
-} from './components/search/search';
-
 declare global {
-  interface HTMLEmartSearchElement extends EmartSearch, HTMLElement {
+
+  namespace StencilComponents {
+    interface EmartSearch {
+      'autoFocus': boolean;
+      'clear': () => void;
+      'custom': any;
+      'emojisToShowFilter': any;
+      'exclude': any;
+      'i18n': any;
+      'include': any;
+      'maxResults': number;
+      'onSearch': any;
+    }
   }
+
+  interface HTMLEmartSearchElement extends StencilComponents.EmartSearch, HTMLStencilElement {}
+
   var HTMLEmartSearchElement: {
     prototype: HTMLEmartSearchElement;
     new (): HTMLEmartSearchElement;
   };
   interface HTMLElementTagNameMap {
-    "emart-search": HTMLEmartSearchElement;
+    'emart-search': HTMLEmartSearchElement;
   }
   interface ElementTagNameMap {
-    "emart-search": HTMLEmartSearchElement;
+    'emart-search': HTMLEmartSearchElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "emart-search": JSXElements.EmartSearchAttributes;
+      'emart-search': JSXElements.EmartSearchAttributes;
     }
   }
   namespace JSXElements {
     export interface EmartSearchAttributes extends HTMLAttributes {
-      autoFocus?: boolean;
-      custom?: any;
-      emojisToShowFilter?: any;
-      exclude?: any;
-      i18n?: any;
-      include?: any;
-      maxResults?: number;
-      onSearch?: any;
+      'autoFocus'?: boolean;
+      'custom'?: any;
+      'emojisToShowFilter'?: any;
+      'exclude'?: any;
+      'i18n'?: any;
+      'include'?: any;
+      'maxResults'?: number;
+      'onSearch'?: any;
     }
   }
 }
 
 declare global { namespace JSX { interface StencilJSX {} } }
+
+export declare function defineCustomElements(window: any): void;
