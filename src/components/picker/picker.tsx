@@ -36,6 +36,8 @@ export class Picker {
         this.setPreviewRef = this.setPreviewRef.bind(this)
         this.handleSkinChange = this.handleSkinChange.bind(this)
         this.forceUpdate = this.forceUpdate.bind(this)
+
+        window["emojiMartFrequently"] = frequently;
     }
 
     @Element() host: HTMLElement
