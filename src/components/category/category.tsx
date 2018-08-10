@@ -15,7 +15,7 @@ export class Category {
 
     @Prop() categoryId: any;
     @Prop() categoryKey: any;
-    @Prop() emojis: any = []; 
+    @Prop() emojis: any = [];
     @Prop() hasStickyPosition: boolean = true;
     @Prop() name: string;
     @Prop() native: boolean;
@@ -24,6 +24,7 @@ export class Category {
     @Prop() recent: string[];
     @Prop() custom: any;
     @Prop() i18n: any = I18N;
+    @Prop() emojisToShowFilter: any;
     @Prop() categoryLoaded: any = () => { };;
 
     _parent: any;
@@ -44,27 +45,27 @@ export class Category {
 
         this._margin = 0
         this._minMargin = 0
- 
+
         // this.memoizeSize()
     }
 
     shouldComponentUpdate(nextProps) {
         var {
-        name,
+            name,
             perLine,
             native,
             hasStickyPosition,
             emojis,
             emojiProps,
-      } = this,
+        } = this,
             { skin, size, set } = emojiProps,
             {
-        perLine: nextPerLine,
+                perLine: nextPerLine,
                 native: nextNative,
                 hasStickyPosition: nextHasStickyPosition,
                 emojis: nextEmojis,
                 emojiProps: nextEmojiProps,
-      } = nextProps,
+            } = nextProps,
             { skin: nextSkin, size: nextSize, set: nextSet } = nextEmojiProps,
             shouldUpdate = false
 
@@ -137,7 +138,10 @@ export class Category {
 
                         return id
                     })
-                    .filter(id => !!getData(id))
+                    .filter(id => !!getData(id));
+
+                if (this.emojisToShowFilter)
+                    emojis = emojis.filter(id => this.emojisToShowFilter(getData(id)))
             }
 
             if (emojis.length === 0 && frequentlyUsed.length > 0) {

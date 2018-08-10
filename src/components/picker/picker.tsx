@@ -1,18 +1,18 @@
 import { Component, Prop, State, Method, Element } from '@stencil/core';
 import 'emoji-mart/dist-es/vendor/raf-polyfill'
 import { I18N } from '../../lib/emoji-mart/data/I18N';
- 
-import data from '../../lib/emoji-mart/data/index' 
- 
+
+import data from '../../lib/emoji-mart/data/index'
+
 import store from 'emoji-mart/dist-es/utils/store'
 import frequently from 'emoji-mart/dist-es/utils/frequently'
-import {deepMerge} from 'emoji-mart/dist-es/utils'
- 
+import { deepMerge } from 'emoji-mart/dist-es/utils'
+
 const RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
 const SEARCH_CATEGORY = {
     id: 'search',
-    name: 'Search', 
-    emojis: null, 
+    name: 'Search',
+    emojis: null,
     anchor: false,
 }
 const CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', emojis: [] }
@@ -36,8 +36,6 @@ export class Picker {
         this.setPreviewRef = this.setPreviewRef.bind(this)
         this.handleSkinChange = this.handleSkinChange.bind(this)
         this.forceUpdate = this.forceUpdate.bind(this)
-
-        window["emojiMartFrequently"] = frequently;
     }
 
     @Element() host: HTMLElement
@@ -96,8 +94,8 @@ export class Picker {
     @Method()
     clearSearch() {
         this.handleSearch(null);
-        
-        if(this._search)
+
+        if (this._search)
             this._search.clear();
     }
 
@@ -454,7 +452,7 @@ export class Picker {
         this.skin = skin;
 
         store.update(newState)
-    } 
+    }
 
     updateCategoriesSize() {
         for (let i = 0, l = this._categories.length; i < l; i++) {
@@ -482,7 +480,7 @@ export class Picker {
     }
 
     setScrollRef(c) {
-        if(c) {
+        if (c) {
             this._scroll = c
             this._scrollHeight = this._scroll.scrollHeight
             this._clientHeight = this._scroll.clientHeight
@@ -536,6 +534,7 @@ export class Picker {
                             native={this.native}
                             hasStickyPosition={this._hasStickyPosition}
                             i18n={this._i18n}
+                            emojisToShowFilter={this.emojisToShowFilter}
                             recent={category.id == RECENT_CATEGORY.id ? this.recent : undefined}
                             custom={
                                 category.id == RECENT_CATEGORY.id

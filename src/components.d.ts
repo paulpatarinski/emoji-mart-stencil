@@ -76,6 +76,7 @@ declare global {
       'custom': any;
       'emojiProps': any;
       'emojis': any;
+      'emojisToShowFilter': any;
       'forceUpdate': () => void;
       'getTop': () => number;
       'handleScroll': (scrollTop: any) => boolean;
@@ -115,6 +116,7 @@ declare global {
       'custom'?: any;
       'emojiProps'?: any;
       'emojis'?: any;
+      'emojisToShowFilter'?: any;
       'hasStickyPosition'?: boolean;
       'i18n'?: any;
       'name'?: string;
